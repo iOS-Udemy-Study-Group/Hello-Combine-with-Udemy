@@ -6,13 +6,14 @@ Combine framework study with Udemy lecture
 Udemy 강의를 참고하며 Combine framework 스터디 예정
 
 - Study Repository :  https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy
-- 첫 Combine with Udemy 스터디 : 11/26(토), 오후 10시 ~ 12시
-  - 첫 스터디는 2시간을 잡았는데, 이후 스터디는 시간단위가 아닌 강의 Section 단위로 진행하는등 스터디 진행에 따라 변경될 수 있음
+- Combine with Udemy 스터디 계획
+  - 1주차 : 11/26(토), 오후 10시 ~ 12시 (완료)
+  - 2주차 : 12/3(토), 오후 10시  ~ 12시
 
 ### 스터디 환경
-- 첫 스터디에서는 한글자막, 영어자막 모두 추가하여 보고, 화면을 너무 가리는 등의 문제로 불편하면 영어자막만 보거나 하는 식으로 수정 예정
-- programmers 클래스룸으로 스터디해볼 예정 (화면공유, 녹화기능 활용)
-  - 스터디룸 개설이 완료되면 링크 추가 첨부 예정
+- 첫 스터디에서는 한글자막, 영어자막 모두 추가하여 보고, 화면을 너무 가리는 등의 문제로 불편하면 영어자막만 표시예정
+- programmers 클래스룸으로 화면 공유하여 스터디 진행 (화면공유, 녹화기능 활용)
+
 
 ### 스터디 방식
 - 각자 학습한 내용은 공용 study repository에 공유
@@ -31,7 +32,6 @@ Udemy 강의를 참고하며 Combine framework 스터디 예정
 <br>
 
 <br>
-
 
 
 ## Lecture 5. What is functional Programming?
