@@ -3,7 +3,7 @@ Combine framework study with Udemy lecture
 
 ## 스터디 계획
 
-Udemy 강의를 참고하며 Combine framework 스터디 예정
+Udemy 강의를 활용하여 Combine framework 스터디 예정
 
 - Study Repository :  https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy
 - Combine with Udemy 스터디 계획
@@ -11,8 +11,7 @@ Udemy 강의를 참고하며 Combine framework 스터디 예정
   - 2주차 : 12/3(토), 오후 10시  ~ 12시
 
 ### 스터디 환경
-- 첫 스터디에서는 한글자막, 영어자막 모두 추가하여 보고, 화면을 너무 가리는 등의 문제로 불편하면 영어자막만 표시예정
-- programmers 클래스룸으로 화면 공유하여 스터디 진행 (화면공유, 녹화기능 활용)
+- Udemy 강의를 기반으로 한 스터디 내용을 스터디원 별로 공유 및 토론하며 공용 문서를 정리
 
 
 ### 스터디 방식
