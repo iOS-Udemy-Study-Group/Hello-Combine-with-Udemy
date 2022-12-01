@@ -34,31 +34,68 @@ Udemy 강의를 참고하며 Combine framework 스터디 예정
 <br>
 
 
-## Lecture 5. What is functional Programming?
 
-- 기존 명령형 프로그래밍에서는 변수를 지정하고 그 변수의 상태를 바꾸기 위해 별도 위치에서 다른 값을 할당하는 등의 동작이 필요하다.
+## 1주차 스터디 
+
+- 3-22. replaceEmpty 까지 진행
+
+### 스터디에서 나온 의견 리스트
+
+- Combine과 KVO의 연관성은?
+
+
+
+## Section 1: Introduction
+
+### 1-5. What is functional Programming
+
 - Imparative(명령형) 프로그래밍과 달리, functional(함수형) 프로그래밍은 상태가 바뀌는 값이 immutable하게 구성될 수 있다.
-  - 함수형 프로그래밍은 race condition, dead lock등의 문제점을 해소할 수 있다.
-  - 사용되는 고차함수들은 특정 입력에 대해서 동일한 결과값을 내놓으므로, 사이드 이펙트를 줄일 수 있다.
+- 기존에 사용되던 명령형 프로그래밍과 달리, 함수형 프로그래밍은 immutable 하다는 차이점이 있다. 명령형 프로그래밍은 변수를 선언하고, 특정 위치에서 변수가 변경된다. 이런 mutable state는 Concurrency, Dead Locks, Race Conditions 등에서 문제를 야기할 가능성이 크다.
+- 함수형 프로그래밍은 명령형 프로그래밍과 달리 immutable하게 값이 정의될 수 있다.  함수형 프로그래밍에서는 filter, map, reduce 등 다양한 1급객체의 함수들을 필요에 따라 함께 사용하게 된다.
+  - Pure Functions
+    - function은 항상 같은 input에 대해 동일한 output을 생산한다.
+    - function은 side effects를 만들지 않는다.
+
+### 1-6. What is Combine Framework?
+
+- reference : https://www.avanderlee.com/swift/combine/
+- Apple의 built-in framework, 이벤트 처리가 가능한 operator들을  결합하여 비동기 이벤트를 처리할 수 있도록 해준다.
+
+### 1-7. RxSwift vs Combine
+
+- reference : https://medium.com/@M0rtyMerr/will-combine-kill-rxswift-64780a150d89
+
+- RxSwift는 iOS 8 이상에서 사용 가능한 외부 라이브러리인 반면, Combine은 애플에서 만든 내장 framework이다.
 
 
 
-## Lecture 6. What is Combine Framework?
+## Section 2: Publishers, Subscribers and Operators
 
-- Combine framework는 비동기 이벤트를 처리하는 reactive framework입니다.
+### 2-8. Hello Publishers and Subscribers
 
+### Publishers
 
+- Publisher는 이벤트를 방출할 수 있다. (RxSwift의 Observable과 유사)
+- Output, Failure 연관 타입을 갖는다.
+- Publisher 프로토콜을 채택하여 정의할 수 있다. 
+- Subscriber로부터 구독을 당할 수 있다. 구독을 당할때 Subscription을 만들어서 Subscriber에게 전달한다. 이후 구독이 해지되기 전까지 구독자에게 이벤트를 전달한다.
 
-## Lecture 8. Hello Publishers and Subscribers
+### Subscribers
 
-- Combine에는 subject, subscriber, publisher가 존재합니다.
+- Publisher, Subject를 구독할 수 있다. (RxSwift의 Observer와 유사)
+- Input, Failure 연관 타입을 갖는다.
+- 구독을 했을때 Subscription을 받는 메서드, 구독 간 이벤트를 받는 메서드, 구독이 끝났을때 completed 메서드가 정의된다.
+- Apple에서는 Custom Subscriber의 사용을 권장하지 않는 것으로 알고 있다.
+  - assign, sink 등을 사용해서 Custom Subscriber 구현 없이 Apple에서 기본적으로 제공하는 Subscriber를 사용 가능하다.
 - Subscriber가 Publisher를 구독하면, Publisher는 데이터 이벤트를 Subscriber에게 전달합니다.
   - Publisher -----> Stream of Data  ----->  Subscriber
   - 구독 시 Publisher는 Subscriber에게 subscription을 전달한다. 이때 Subscriber는 얼마나 이벤트를 받을지 요청할 수 있다.
   - Publisher는 요청받은 만큼의 이벤트를 Subscriber에게 전달한다. Subscriber는 이벤트 값을 받으면 이에 맞는 request를 하거나 그냥 받기만 할 수 있다.
   - 구독이 종료되면, Subscriber는 completion 이벤트를 받는다.
 
-## Lecture 9. Sending Notifications Using Publisher and Subscriber
+
+
+### 2-9. Sending Notifications Using Publisher and Subscriber
 
 - Combine의 Publisher는 구독(sink)이 가능하다. 클로져를 통해 구독한 Publisher의 이벤트를 수신 받을 수 있다.
   - Combine의 Publisher는 RxSwift의 Observable와 유사, (둘 다 Subject, Subscriber(RxSwift Observer)를 가짐)
@@ -83,7 +120,7 @@ NotificationCenter.default.post(name: notification, object: nil)
 
 
 
-## Lecture 10. Understanding Cancellable
+### 2-10. Understanding Cancellable
 
 - New Paper를 예로 들어보자. 구독을 하다가 취소를 해야 신문을 그만 볼 수 있다.
 - 구독 취소 후의 Observable, Publisher 이벤트는 받을 수 없다.
@@ -91,9 +128,11 @@ NotificationCenter.default.post(name: notification, object: nil)
 
 
 
-## Lecture 11. Subscriber
 
-- Publisher의 이벤트를 감지하기 위해서는 구독이 필요했다. 그 구독을 하는 것이 Subscriber이다. Subscriber는 Input, Failure 제네릭타입을 갖고 있는데, Publisher의 Output과 Subscriber의 Input이, 양쪽의 Failure가 일치해야 구독을 할 수 있다.
+
+### 2-11. Subscriber
+
+- Publisher의 이벤트를 감지하기 위해서는 구독이 필요했다. 그 구독을 하는 것이 Subscriber이다. Subscriber는 Input, Failure 연관 타입을 갖고 있는데, Publisher의 Output과 Subscriber의 Input, 양쪽의 Failure가 일치해야 구독을 할 수 있다
 - Publisher와 Subscriber의 구독 후 상호관계 feat. Subscriber 프로토콜을 채택한 StringSubscriber 생성
 
 ~~~swift
@@ -149,10 +188,12 @@ Received value : C
 
 
 
-## Lecture 12. Subjects
+### 2-12. Subjects
 
-- Subject는 이벤트를 방출할 수 있는 Publisher면서 구독이 가능한 Subscriber입니다.
-  - RxSwift의 Subject는 이벤트를 방출할 수 있는 Observable이면서 구독이 가능한 Observer입니다.
+- Publisher 이면서 Subscriber이다. (RxSwift의 Observable이면서 Subscriber인 Subject와 유사)
+- 초기값이 없는 PassthroughSubject, 초기값을 갖는 CurrentValueSubject가 있다. (RxSwift의 PublishSubject, BehaviorSubject와 유사)
+- RxCocoa에서 제공하는 PublishRelay, BehaviorRelay와 같은 Subject는 제공하지 않아 사용을 위해서는 Custom 구현을 해야 한다. (Failure 연관 타입을 Never로 지정)
+- 원하는 시점에 send를 통해 구독자들을 위한 이벤트를 방출할 수 있다.
 
 ~~~swift
 let subscriber = StringSubscriber()
@@ -182,7 +223,7 @@ subject.send("ㅠㅠ")
 
 
 
-## Lecture  13. Type Eraser (eraseToPublisher)
+### 2-13. Type Eraser (eraseToPublisher)
 
 - 사용한 Publisher 연산 결과의 타입을 가리고 싶을때 Type Eraser로서 eraseToPublisher를 사용할 수 있다.
 - eraseToAnyPublisher를 사용하면 AnyPublisher타입으로 바뀐다. (기존 Publisher 결과타입을 래핑한다.)
@@ -198,9 +239,9 @@ let publisher = PassthroughSubject<Int, Never>() // PassthroughSubject<Int, Neve
 
 
 
-# Operators
+## Section 3: Transforming Operators
 
-## Lecture 14. Understandinig Transforming operators
+### 3-14. Understandinig Transforming operators
 
 - 기존 Sequence를 각각의 element에 대해 특정 연산을 적용한 새로운 Sequence로 변환시킨다.
 
@@ -211,7 +252,7 @@ let publisher = PassthroughSubject<Int, Never>() // PassthroughSubject<Int, Neve
 
 
 
-### collect operator
+### 3-15. collect operator
 
 - collect operator는 방출할 모든 이벤트를 하나로 모아놓은 Array로 반환한다.
 - collect N : Int 인자를 넣으면 N개 단위로 나누어서 Array를 반환한다.
@@ -227,7 +268,7 @@ anyCancellable.cancel()
 
 
 
-### map operator
+### 3-16. map operator
 
 ~~~swift
 // MARK: 16. map operator
@@ -246,7 +287,7 @@ formatter.numberStyle = .spellOut
 
 
 
-### map with keyPath
+### 3-17. map with keyPath
 
 ~~~swift
 // MARK: 17. map KeyPath
@@ -268,7 +309,7 @@ publisher.send(Point(x: 10, y: 20))
 
 
 
-### replaceNil operator
+### 3-19. replaceNil operator
 
 - publisher sequence에 nil이 있을 경우 nil을 특정 값으로 변환한 sequence를 반환합니다.
 
@@ -287,7 +328,7 @@ publisher.send(Point(x: 10, y: 20))
 
 
 
-### replaceEmpty operator
+### 3-22. replaceEmpty operator
 
 ~~~swift
 // MARK: 22. replaceEmpty operator
