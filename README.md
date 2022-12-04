@@ -1,20 +1,39 @@
 # Hello-Combine-with-Udemy
 Combine framework study with Udemy lecture
 
+- reference lecture url : https://www.udemy.com/course/the-complete-guide-to-combine-framework-in-ios-using-swift/
+
 ## 스터디 계획
 
 Udemy 강의를 활용하여 Combine framework 스터디 예정
 
-- Study Repository :  https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy
-- Combine with Udemy 스터디 계획
-  - 1주차 : 11/26(토), 오후 10시 ~ 12시 (완료)
-  - 2주차 : 12/3(토), 오후 10시  ~ 12시
+### 1주차 스터디 
 
-### 스터디 환경
+- 11/26(토), 오후 10시 ~ 12시 (완료)
+
+- 1-1. introduction ~ 3-22. replaceEmpty 까지 스터디 진행
+
+### 2주차 스터디
+
+- 12/3(토), 오후 10시  ~ 12시 (완료)
+- 3-23. scan operator ~ 5-41. combineLatest 까지 스터디 진행
+
+#### 스터디에서 나온 질문 리스트
+
+- Combine과 KVO의 연관성은?
+- eraseToAnyPublisher의 역할?
+  - Publisher 연산 결과를 추상화, 내부 연산과정은 숨기고, 결과 타입만 외부에 노출시킬때 사용
+
+
+
+
+## 스터디 환경
 - Udemy 강의를 기반으로 한 스터디 내용을 스터디원 별로 공유 및 토론하며 공용 문서를 정리
 
 
-### 스터디 방식
+
+
+## 스터디 방식
 - 각자 학습한 내용은 공용 study repository에 공유
   - 각자 적당한 의무감을 갖고 스터디하기 위함
 - 개인적으로 공부한 내용은 개인폴더에 기록 (fork 후, 개인 스터디 내용 기록 했다가 공용 repository에 PR)
@@ -23,24 +42,11 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
   - 스터디 기록 정리 방식에 대한 좋은 의견 자유롭게 공유
 - Udemy 강의 스터디 중에 질문사항이 있으면 채팅을 통해 알려주고, 바로잡고 가기
 
-
-* Lecture URL (udemy) : https://www.udemy.com/course/the-complete-guide-to-combine-framework-in-ios-using-swift/
-
 <br>
 
 <br>
 
 <br>
-
-
-
-## 1주차 스터디 
-
-- 3-22. replaceEmpty 까지 진행
-
-### 스터디에서 나온 의견 리스트
-
-- Combine과 KVO의 연관성은?
 
 
 
