@@ -3,6 +3,11 @@ Combine framework study with Udemy lecture
 
 - reference lecture url : https://www.udemy.com/course/the-complete-guide-to-combine-framework-in-ios-using-swift/
 
+
+
+<br>
+<br>
+
 ## 스터디 계획
 
 Udemy 강의를 활용하여 Combine framework 스터디 예정
@@ -26,14 +31,15 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
 
 
 
-
-## 스터디 환경
-- Udemy 강의를 기반으로 한 스터디 내용을 스터디원 별로 공유 및 토론하며 공용 문서를 정리
-
+<br>
+<br>
 
 
 
 ## 스터디 방식
+
+- Udemy 강의를 기반으로 한 스터디 내용을 스터디원 별로 공유 및 토론하며 공용 문서를 정리
+
 - 각자 학습한 내용은 공용 study repository에 공유
   - 각자 적당한 의무감을 갖고 스터디하기 위함
 - 개인적으로 공부한 내용은 개인폴더에 기록 (fork 후, 개인 스터디 내용 기록 했다가 공용 repository에 PR)
@@ -42,10 +48,28 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
   - 스터디 기록 정리 방식에 대한 좋은 의견 자유롭게 공유
 - Udemy 강의 스터디 중에 질문사항이 있으면 채팅을 통해 알려주고, 바로잡고 가기
 
-<br>
+
 
 <br>
+<br>
 
+
+
+## Combine Study Section 목차
+
+### [Section 1: Introduction](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-1-introduction)
+
+### [Section 2: Publishers, Subscribers and Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-2-publishers-subscribers-and-operators)
+
+### [Section 3: Transforming Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-3-transforming-operators)
+
+### [Section 4: Filtering Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-4-filtering-operators)
+
+### [Section 5: Combining Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-5-combining-operators)
+
+
+
+<br>
 <br>
 
 
