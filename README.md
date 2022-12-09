@@ -3,6 +3,11 @@ Combine framework study with Udemy lecture
 
 - reference lecture url : https://www.udemy.com/course/the-complete-guide-to-combine-framework-in-ios-using-swift/
 
+
+
+<br>
+<br>
+
 ## 스터디 계획
 
 Udemy 강의를 활용하여 Combine framework 스터디 예정
@@ -26,14 +31,15 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
 
 
 
-
-## 스터디 환경
-- Udemy 강의를 기반으로 한 스터디 내용을 스터디원 별로 공유 및 토론하며 공용 문서를 정리
-
+<br>
+<br>
 
 
 
 ## 스터디 방식
+
+- Udemy 강의를 기반으로 한 스터디 내용을 스터디원 별로 공유 및 토론하며 공용 문서를 정리
+
 - 각자 학습한 내용은 공용 study repository에 공유
   - 각자 적당한 의무감을 갖고 스터디하기 위함
 - 개인적으로 공부한 내용은 개인폴더에 기록 (fork 후, 개인 스터디 내용 기록 했다가 공용 repository에 PR)
@@ -42,10 +48,28 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
   - 스터디 기록 정리 방식에 대한 좋은 의견 자유롭게 공유
 - Udemy 강의 스터디 중에 질문사항이 있으면 채팅을 통해 알려주고, 바로잡고 가기
 
-<br>
+
 
 <br>
+<br>
 
+
+
+## Combine Study Section 목차
+
+### [Section 1: Introduction](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-1-introduction)
+
+### [Section 2: Publishers, Subscribers and Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-2-publishers-subscribers-and-operators)
+
+### [Section 3: Transforming Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-3-transforming-operators)
+
+### [Section 4: Filtering Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-4-filtering-operators)
+
+### [Section 5: Combining Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-5-combining-operators)
+
+
+
+<br>
 <br>
 
 
@@ -353,7 +377,9 @@ empty
 
 
 
-### scan operator
+### 3-23. scan operator
+
+- reduce와 사용방식이 유사합니다. 차이점이라면, reduce는 Sequence 연산의 결과 하나만 down stream으로 내려주지만, scan은 Sequence 각 Element 연산 결과를 모두 반환합니다. 
 
 ~~~swift
 // MARK: 23. scan operator
@@ -365,11 +391,24 @@ publisher.scan([]) { numbers, value -> [Int] in
 }.sink { scanValue in
   print(scanValue) // scan operator의 appending 연산 과정이 모두 출력된다.
 }
+/*
+// Scan Operator Output
+[1]
+[1, 2]
+[1, 2, 3]
+...
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+*/
 ~~~
 
 
 
-### filter operator
+## Section 4: Filtering Operators
+
+### 4-24. filter operator
+
+- 특정 조건을 충족하는 Element들을 down stream에 전달합니다.
 
 ~~~swift
 // MARK: - Section 4. Filtering Operators
@@ -383,41 +422,37 @@ numbers.filter { $0 % 2 == 0 }.sink(receiveValue: {
 
 
 
-### removeDuplicates operator
+### 4-25. removeDuplicates operator
+
+- Sequence에서 연속적으로 중복되는 이벤트를 무시하고, down stream에 전달합니다.
 
 ~~~swift
 // MARK: 25. removeDuplicates operator
 // removeDuplicates operator를 사용하면 Sequence의 중복값을 제거한 Sequence로 반환받을 수 있다.
 // removeDuplicates를 사용할때 모든 중복값이 제거되는 것은 아니다. Sequence에서 연속된 중복값만 한하여 무시하여 필터링한다.
 // 중복 문자열이 있는 배열에 대한 publisher를 선언한다.
+// 1) 아래 String 문자열은 components(separatedBy:) 에 의해 [String] 타입으로 변환
+// 2) String Sequence Publisher에 대한 removeDuplicates 연산으로 2번째 apple은 연속적으로 중복되므로 무시됩니다.
 let words = "apple apple fruit apple mango watermelon apple".components(separatedBy: " ").publisher
   .removeDuplicates()
 words.sink {
   print($0)
 }
+
+/*
+// Output
+apple
+fruit
+apple
+mango
+watermelon
+apple
+*/
 ~~~
 
 
 
-
-
-### 🐵 operator exercise
-
-~~~swift
-let publisher = [1, 1, 1, 2, 2, 2, 3, 3, 3, 1, 1]
-      .reduce(into: Set<Int>()) { result, value in // 중복 제거
-        result.insert(value)
-      }
-      .sorted() // 중복 제거 후 오름차순 정렬
-      .publisher // Publisher 변환 후 구독 진행
-      .sink { value in
-        print(value) // 1, 2, 3 수신
-      }
-~~~
-
-
-
-### compactMap operator
+### 4-26. compactMap operator
 
 - compactMap operator는 map과 유사한 동작을 하지만 연산 결과가 non-optional인 값만 모아서  Sequence로 변환하는 차이점이 있다. 즉, compactMap operator는  non-optional Sequence만 반환한다.
 
@@ -425,15 +460,17 @@ let publisher = [1, 1, 1, 2, 2, 2, 3, 3, 3, 1, 1]
 let strings = ["a", "1.24", "b", "3.45", "6.7"]
   .publisher.compactMap { Float($0) }
   .sink {
-    print($0)
+    // Float 타입으로 변환 가능한 1.24, 3.45, 6.7만 down stream으로 내려옵니다. map을 사용했다면, 변환이 불가능한 원소는 nil로 내려옵니다.
+    print($0) 
   }
 ~~~
 
 
 
-### ignoreOutput operator
+### 4-27. ignoreOutput operator
 
-- ignoreOutput operator는  completiion event만 받고 그 이외의 이벤트는 무시하고자 할 때 사용 가능합니다.
+- ignoreOutput operator는 Empty Publisher를 반환하는 operator입니다.
+- completion event만 받고 그 이외의 이벤트는 무시하고자 할 때 사용 가능합니다.
 
 ~~~swift
 let numbers = (1...5000).publisher
@@ -448,10 +485,14 @@ numbers
 
 
 
-### first, last operator
+### 4-28~29. first, last operator
 
 - first operator는 Sequence의 첫번째 혹은 특정 조건에 맞는 첫번째 값을 방출할때 사용할 수 있습니다.
+  - 단순 첫번째 값 방출에는 first(), 조건 추가를 위해서는 first(where:) 사용
+
 - last operator는 Sequence의 마지막 혹은 특정 조건에 맞는 마지막 값을 방출할때 사용할 수 있습니다.
+  - 단순 마지막 값 방출에는 last(), 조건 추가를 위해서는 last(where:) 사용
+
 
 ~~~swift
 // MARK: 28. first operator
@@ -473,11 +514,15 @@ numbers.last(where: { $0 % 2 == 1 }) // 홀수인 마지막 값을 방출
 
 
 
-### dropFirst / dropWhile / dropUntilOutputFrom operator
+### 4-30~32. dropFirst / drop(while:) / drop(untilOutputFrom:) operator
 
 - dropFirst는 Sequence에서 최초 N개의 이벤트를 무시하고자 할때 사용할 수 있다.
 - dropWhile은 특정 조건을 충족하는 동안 이벤트를 무시하고자 할때 사용한다.
-- dropUntilOutputFrom은 trigger용 Subject로부터 이벤트를 받기 전까지 이벤트를 무시할 수 있다.
+  - 최초 조건을 미충족하는 시점부터 다시 이벤트를 방출한다.
+
+- dropUntilOutputFrom은 trigger용 Publisher로부터 이벤트를 받기 전까지 이벤트를 무시할 수 있다.
+  - untilOutputFrom 레이블 인자로 넣은 Publisher가 이벤트를 방출하기 전까지 이벤트가 무시됩니다.
+
 
 ~~~swift
 // MARK: 30. dropFirst operator
@@ -514,10 +559,12 @@ taps.drop(untilOutputFrom: isReady)
 
 
 
-### prefix, prefixWhile
+### 4-33. prefix, prefix(while:)
 
 - prefix operator는  Sequence의 첫번째부터 N개의 이벤트만 방출하도록 할때 사용합니다.
 - prefix(while:) operator는 특정 조건을 충족하지 않는 이벤트가 나오기 전까지의 prefix event를 방출합니다.
+  - 최초 조건을 미충족하기 이전 까지 event를 방출합니다.
+
 
 ~~~swift
 // MARK: 33. prefix(_:), prefix(while:) operator
@@ -534,6 +581,26 @@ numbers
 	.sink {
     print($0) // 1, 2
   }
+~~~
+
+
+
+
+
+### 4-34~35. Challenge: Filter all the things
+
+### 🐵 operator exercise
+
+~~~swift
+let publisher = [1, 1, 1, 2, 2, 2, 3, 3, 3, 1, 1]
+      .reduce(into: Set<Int>()) { result, value in // 중복 제거
+        result.insert(value)
+      }
+      .sorted() // 중복 제거 후 오름차순 정렬
+      .publisher // Publisher 변환 후 구독 진행
+      .sink { value in
+        print(value) // 1, 2, 3 수신
+      }
 ~~~
 
 
@@ -567,11 +634,13 @@ publisher
 
 
 
-### prepend, append operator
+## Section 5: Combining Operators
+
+### 5-36~37. prepend, append operator
 
 - prepend
   - prepend operator는 append의 반대로 Sequence 앞에 이벤트를 추가시킬 때 사용합니다.
-  - Sequence publisher를 인자로 넣어서 사용할 수도 있습니다.
+  - 단일 event 뿐만 아니라 Sequence publisher를 인자로 넣어서 사용할 수도 있습니다.
 
 ~~~swift
 // MARK: 36. preappend operator
@@ -611,9 +680,17 @@ numbers
 
 
 
-### switchToLatest operator
+### 5-38. switchToLatest operator
 
-- PassthroughSubject를  Output으로 갖고 있는 A Subject가 있다고 보자, 해당  subject에  switchToLatest를 사용하면, 이후, A Subject가 가장 최근에 방출한 PassthroughSubject에 대한 이벤트만 수신 받을 수 있다.
+- PassthroughSubject를 Output으로 갖고 있는 publishers Subject가 있다고 봅시다.
+
+~~~swift
+let publishers = assthroughSubject<PassthroughSubject<String, Never>, Never>()
+~~~
+
+
+
+-  publishers Subject에서 switchToLatest를 사용하면, 이후, publishers Subject가 가장 최근에 방출한 PassthroughSubject에 대한 이벤트만 수신 받을 수 있습니다.
 
 ~~~swift
 // MARK: 38. switchToLatest operator
@@ -641,7 +718,7 @@ publisher2.send("Publisher2 - B")
 
 
 
-### switchToLatest operator usecase
+### 5-39. switchToLatest operator usecase
 
 ~~~swift
 // MARK: 39. switchToLatest continued
@@ -672,35 +749,34 @@ let subscription = taps.map { _ in getImage() }
   }
 
 // getImage 메서드는 3초뒤 이미지를 전달한다.
-
-// 1) houston index(0)일때는 바로 이벤트를 보낸다. 3초 뒤, index는 그대로 0이므로 houston에 대한 이미지를 받는다.
-taps.send() // tap action
+// 1) 첫번째 taps.send() 발생 3초 뒤, index는 그대로 0이므로 subscription을 통해 houston에 대한 UIImage를 이벤트로 받습니다.
+taps.send()
 // => 3초 뒤 0번째 인덱스의 이미지를 받음
-// 2) 이후 6초 뒤에 실행되는 비동기 코드
+
+// 2) 6초 뒤에 실행되는 A 비동기 코드
 DispatchQueue.main.asyncAfter(deadline: .now() + 6.0, execute: {
   // 3) 6초 뒤, index += 1 후 index는 1이 된다.
-  // 4) 이어서 tap 이벤트가 발생한다. 3초 뒤 이미지를 받을 것이다. 이어서 아래 DispatchQueue 동작이 곧바로 실행된다.
+  // 4) index가 1이 되고 tap 이벤트가 발생한다. 3초 뒤 이미지를 받을 것이다.
   index += 1
   taps.send()
 })
 
-// seattle index(2)일때는 6.5초 뒤에 이벤트를 보낸다.
+// seattle index(2)일때는 6.5초 뒤에 이벤트를 보낸다. 실질적으로는 6초뒤 실행되었던 위 코드 실행 0.5초 뒤 실행된다.
 DispatchQueue.main.asyncAfter(deadline: .now() + 6.5, execute: {
-  // 5) 6.5초 뒤 index가 한번더 증가한다. index == 2 이다.
-  // 6) 4)에서 발생한 tap 이벤트에 대한 getImage 콜벡을 수신한다. 이때 index는 2이므로, Denver가 아닌 Seattle에 대한 이미지를 받게된다.
-  // => index가 1인 시점에서 getImage 메서드를 호출했지만, image 콜벡을 받는 3초 동안 이미 index가 2로 바뀌었기 때문에, index == 2 이미지인 Seattle 이미지를 이벤트로 받게 된다.
+  // 5) 6.5초 뒤(A 비동기 코드 실행 0.5초 후) index가 한번 더 증가한다. index == 2 이다.
+  // 6) A 비동기 코드에서 발생한 tap 이벤트에 대한 getImage 콜벡을 수신한다. 이때 index는 2이므로, Denver가 아닌 Seattle에 대한 이미지를 받게된다.
+  // => index가 1인 시점에서 A 비동기 코드에 의해 getImage 메서드를 호출했지만, image 콜벡을 받는 3초 동안 이미 index가 2로 바뀌었기 때문에, index == 2 이미지인 Seattle 이미지를 이벤트로 받게 된다.
   //
   index += 1
   taps.send()
 })
 
-// Denver에 대한 이미지 요청은 6초 이후 전달되었지만, 추가로 3초 후 이미지가 전달 되기 전에 index가 다시 증가하여 Seattle에 대한 index가 되었으므로
 // Denver가 아닌 최근 index에 대한 이미지인 Seattle 이미지를 받게 된다. 이처럼 switchToLatest operator는 가장 최근 상태에 대한 이벤트를 받고 싶을때 사용할 수 있다.
 ~~~
 
 
 
-### merge operator
+### 5-40. merge operator
 
 - merge operator는 여러개의 publisher를 합칠 수 있고, 시간 순으로 합친 publisher들의 이벤트를 받을 수 있다.
 
@@ -713,11 +789,11 @@ publisher1.merge(with: publisher2).sink {
 }
 
 // merge로 합친 여러개의 subject publisher에 대한 이벤트를 시간 순으로 수신할 수 있다.
+// Output : 1, 2, 4, 6, 7, 8
 publisher1.send(1)
 publisher1.send(2)
 
 publisher2.send(4)
-publisher2.send(5)
 publisher2.send(6)
 
 publisher1.send(7)
@@ -726,10 +802,12 @@ publisher1.send(8)
 
 
 
-### combineLatest operator
+### 5-41. combineLatest operator
 
 - combineLatest는 RxSwift의 동일 이름 연산자와 동작이 모두 유사하다.
 - publisher들의 가장 최근 값들을 방출한다. (최소 한번씩은 방출이 되어야 쌍으로 방출이 됨)
+  - 활용 가능한 케이스 : 모든 텍스트 필드를 채운 이후에 각각의 텍스트 상태를 감지하고 싶을때
+
 
 ~~~swift
 // MARK: 41. combineLatest operator
