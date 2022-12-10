@@ -57,15 +57,14 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
 
 ## Combine Study Section 목차
 
-### [Section 1: Introduction](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-1-introduction)
+### [Section 1: Introduction](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-1-introduction-1)
 
-### [Section 2: Publishers, Subscribers and Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-2-publishers-subscribers-and-operators)
+### [Section 2: Publishers, Subscribers and Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-2-publishers-subscribers-and-operators-1)
+### [Section 3: Transforming Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-3-transforming-operators-1)
 
-### [Section 3: Transforming Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-3-transforming-operators)
+### [Section 4: Filtering Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-4-filtering-operators-1)
 
-### [Section 4: Filtering Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-4-filtering-operators)
-
-### [Section 5: Combining Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-5-combining-operators)
+### [Section 5: Combining Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-5-combining-operators-1)
 
 
 
