@@ -11,6 +11,7 @@ Combine framework study with Udemy lecture
 ## 스터디 계획
 
 Udemy 강의를 활용하여 Combine framework 스터디 예정
+- 매주 다수결로 스터디 날짜 지정 후, 2시간 스터디 진행
 
 ### 1주차 스터디 
 
@@ -22,6 +23,11 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
 
 - 12/3(토), 오후 10시  ~ 12시 (완료)
 - 3-23. scan operator ~ 5-41. combineLatest 까지 스터디 진행
+
+### 3주차 스터디
+
+- 12/11(일), 오후 8시 ~ 10시 예정
+- 5-42. zip ~ 
 
 #### 스터디에서 나온 질문 리스트
 
