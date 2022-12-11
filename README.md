@@ -3,9 +3,21 @@ Combine framework study with Udemy lecture
 
 - reference lecture url : https://www.udemy.com/course/the-complete-guide-to-combine-framework-in-ios-using-swift/
 
-
-
 <br>
+
+## Hello, Combine with Udemy 스터디 목차
+
+### [스터디 계획](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#스터디-계획-1)
+
+### [Section 1: Introduction](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-1-introduction-1)
+
+### [Section 2: Publishers, Subscribers and Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-2-publishers-subscribers-and-operators-1)
+### [Section 3: Transforming Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-3-transforming-operators-1)
+
+### [Section 4: Filtering Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-4-filtering-operators-1)
+
+### [Section 5: Combining Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-5-combining-operators-1)
+
 <br>
 
 ## 스터디 계획
@@ -28,18 +40,7 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
 - 5-42. zip ~ 9-57. Timer class
 - 👩🏻‍💻 [applebuddy](https://github.com/applebuddy) | [AppleCEO](https://github.com/appleceo) | [betterhee](https://github.com/betterhee) | [Jae-eun](https://github.com/jae-eun) | [Lim-YongKwan](https://github.com/lim-yongkwan)
 
-#### 스터디에서 나온 질문 리스트
-
-- Combine과 KVO의 연관성은?
-- eraseToAnyPublisher의 역할?
-  - Publisher 연산 결과를 추상화, 내부 연산과정은 숨기고, 결과 타입만 외부에 노출시킬때 사용, 이후 중간 연산 과정의 변화에 대한 외부 영향도가 줄어듦
-
-
-
 <br>
-<br>
-
-
 
 ## 스터디 방식
 
@@ -53,24 +54,13 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
   - 스터디 기록 정리 방식에 대한 좋은 의견 자유롭게 공유
 - Udemy 강의 스터디 중에 질문사항이 있으면 채팅을 통해 알려주고, 바로잡고 가기
 
-
-
-<br>
 <br>
 
+### 스터디에서 나온 질문 리스트
 
-
-## Combine Study Section 목차
-
-### [Section 1: Introduction](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-1-introduction-1)
-
-### [Section 2: Publishers, Subscribers and Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-2-publishers-subscribers-and-operators-1)
-### [Section 3: Transforming Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-3-transforming-operators-1)
-
-### [Section 4: Filtering Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-4-filtering-operators-1)
-
-### [Section 5: Combining Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-5-combining-operators-1)
-
+- Combine과 KVO의 연관성은?
+- eraseToAnyPublisher의 역할?
+  - Publisher 연산 결과를 추상화, 내부 연산과정은 숨기고, 결과 타입만 외부에 노출시킬때 사용, 이후 중간 연산 과정의 변화에 대한 외부 영향도가 줄어듦
 
 
 <br>
