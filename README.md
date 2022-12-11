@@ -354,7 +354,7 @@ publisher.send(Point(x: 10, y: 20))
 // Q. replaceNil이 반환하는 [String?] 타입 대신 [String] 타입이 내려오게 하는 방법은?
 // 1) map { $0! } 을 사용하여 언래핑을 할 수 있다. 강제 옵셔널 언래핑은 안전하지 않은 방법이다. 하지만 replaceNiil을 통해 nil인 값을 다른 값으로 바꾸었기 때문에 정상적으로 언래핑 됨. (그냥 아니면 compactMap 쓰면 됨)
 ["A", "B", nil, "C"].publisher.replaceNil(with: "x")
-	.map { %0! }
+	.map { $0! }
   .sink {
     print($0)
   }
@@ -670,7 +670,7 @@ numbers
 
 ~~~swift
 // MARK: 37. append operator
-et numbers = (1...10).publisher
+let numbers = (1...10).publisher
 let publisher2 = (100...101).publisher
 let publisher3 = [-1].publisher
 numbers
@@ -690,7 +690,7 @@ numbers
 - PassthroughSubject를 Output으로 갖고 있는 publishers Subject가 있다고 봅시다.
 
 ~~~swift
-let publishers = assthroughSubject<PassthroughSubject<String, Never>, Never>()
+let publishers = PassthroughSubject<PassthroughSubject<String, Never>, Never>()
 ~~~
 
 
