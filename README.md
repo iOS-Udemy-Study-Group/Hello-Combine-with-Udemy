@@ -14,26 +14,25 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
 - 매주 다수결로 스터디 날짜 지정 후, 2시간 스터디 진행
 
 ### 1주차 스터디 
-
 - 11/26(토), 오후 10시 ~ 12시 (완료)
-
 - 1-1. introduction ~ 3-22. replaceEmpty 까지 스터디 진행
+- 👩🏻‍💻 [applebuddy](https://github.com/applebuddy) | [AppleCEO](https://github.com/appleceo) | [betterhee](https://github.com/betterhee) | [Lim-YongKwan](https://github.com/lim-yongkwan)
 
 ### 2주차 스터디
-
 - 12/3(토), 오후 10시  ~ 12시 (완료)
 - 3-23. scan operator ~ 5-41. combineLatest 까지 스터디 진행
+- 👩🏻‍💻 [applebuddy](https://github.com/applebuddy) | [AppleCEO](https://github.com/appleceo) | [Lim-YongKwan](https://github.com/lim-yongkwan) | [yeoneei](https://github.com/yeoneei)
 
 ### 3주차 스터디
-
-- 12/11(일), 오후 8시 ~ 10시 예정
-- 5-42. zip ~ 
+- 12/11(일), 오후 8시 ~ 10시 (완료)
+- 5-42. zip ~ 9-57. Timer class
+- 👩🏻‍💻 [applebuddy](https://github.com/applebuddy) | [AppleCEO](https://github.com/appleceo) | [betterhee](https://github.com/betterhee) | [Jae-eun](https://github.com/jae-eun) | [Lim-YongKwan](https://github.com/lim-yongkwan)
 
 #### 스터디에서 나온 질문 리스트
 
 - Combine과 KVO의 연관성은?
 - eraseToAnyPublisher의 역할?
-  - Publisher 연산 결과를 추상화, 내부 연산과정은 숨기고, 결과 타입만 외부에 노출시킬때 사용
+  - Publisher 연산 결과를 추상화, 내부 연산과정은 숨기고, 결과 타입만 외부에 노출시킬때 사용, 이후 중간 연산 과정의 변화에 대한 외부 영향도가 줄어듦
 
 
 
