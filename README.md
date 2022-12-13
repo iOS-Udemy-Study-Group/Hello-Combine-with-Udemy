@@ -22,6 +22,10 @@ Combine framework study with Udemy lecture
 
 ### [Section 7: Combine for Networking](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-7-combining-for-networking-1)
 
+### [Section 8: Debugging Combine](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-8-debugging-combine-1)
+
+### [Section 9: Combine Timers](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-9-combine-timers-1)
+
 
 
 <br>
@@ -1070,13 +1074,106 @@ let cancellable = getPosts().sink(receiveCompletion: { _ in
 
 
 
+## Section 8: Debugging Combine
+
+### print operator
+
+- Publisher의 down stream에서 발생하는 이벤트 결과를 출력할 수 있다.
+
+~~~swift
+// MARK: Section 8. Debugging Combine
+// MARK: 53. Printing events
+// print operator는 디버깅에 사용하는 operator로 인자로 디버깅 레이블을 넣어서 출력할 수도 있다.
+// print operator를 현재 이벤트 동작 방식을 확인할때 사용할 수 있다.
+let publisher = (1...3).publisher
+publisher
+  .print("Debug ID") // 라벨 없이 print()도 가능, print 인자로 디버깅 식별자를 넣고, 디버깅 로그를 출력할 수 있다.
+  .sink {
+    print($0)
+  }
+~~~
+
+
+
+### handleEvents
+
+- Publisher의 다양한 이벤트가 발생했을때 실행될 클로져를 제공한다.
+
+~~~swift
+// MARK: 54. Acting on events - performing side effects
+guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else {
+  fatalError("Invalid URL")
+}
+
+let request = URLSession.shared.dataTaskPublisher(for: url) // -> URLSession.DataTaskPublisher, (data, response) 튜플 데이터를 방출한다.
+
+// 동작 순서
+// 1) Received Request
+// 2) Subscription Received
+// 3) Received Output
+// 4) ~~~~ bytes (Decoding 되지 않은 json Data 수신)
+// 5) Received Completion
+// 6) finished
+let cancellable = request
+  .handleEvents(receiveSubscription: { _ in
+    print("Subscription Received")
+  }, receiveOutput: { _ in
+    print("Received Output")
+  }, receiveCompletion: { _ in
+    print("Received Completion")
+  }, receiveCancel: {
+    print("Received Cancel")
+  }, receiveRequest: { _ in
+    print("Received Request")
+  })
+  .print()
+  .sink(receiveCompletion: {
+  print($0)
+}, receiveValue: { value in
+  print(value.data)
+})
+~~~
+
+
+
+### breakpoint operator
+
+- 특정 조건을 충족했을때 디버깅 모드를 실행할 수 있다.
+
+~~~swift
+import UIKit
+import Combine
+
+class ViewController: UIViewController {
+  /// Publisher 구독정보를 담을 AnyCancellable 타입 변수 선언
+  private var cancellable: AnyCancellable?
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    let publisher = (1...10).publisher
+    self.cancellable = publisher
+      .breakpoint(receiveOutput: { value in
+				// 1 ~ 9 까지 이벤트를 방출하고, 10이 되었을때 디버깅 모드가 실행된다.
+        return value > 9
+      })
+      .sink {
+      print($0)
+    }
+  }
+}
+~~~
+
+
+
+## Section 9: Combine Timers
+
 ### Timer using Combine
 
 - 다양한 방법으로 타이머를 구현할 수 있습니다.
   - RunLoop.schedule (Cancellable 타입으로 관리)
   - DispatchQueue.main.achedule (Cancellable 타입으로 관리)
   - Timer.publish (TimerPublisher를 반환하면 구독 시 반환되는 AnyCancellable 타입으로 관리)
-- RunLoop (runLoop.schedule)
+    - ConnectablePublisher로, connect() or autoconnect()를 사용해야 원하는 시기에 이벤트를 받을 수 있다.
 
 ~~~swift
 import UIKit
@@ -1084,13 +1181,11 @@ import Combine
 import PlaygroundSupport
 
 // MARK: - Section 9. Combine Timers
-// MARK: 56. Using Runloop
+// MARK: 56. Using RunLoop
 // RunLoop은 timer 기능을 제공합니다. RunLoop.main 을 사용하면 메인스레드에서 timer 이벤트를 사용할 수 있습니다.
 // RunLoop 이외의 방식으로도 Combine을 활용해서 타이머 기능을 사용할 수 있습니다.
 
 class MyViewController : UIViewController {
-  
-//  private var cancellables = Set<AnyCancellable>()
   private let runLoop = RunLoop.main
   private var timerSubscription: Cancellable?
   
@@ -1135,19 +1230,19 @@ class MyViewController : UIViewController {
 
 ~~~swift
 // MARK: 57. Timer class
-  // RunLoop 방식 이외로도 Timer class의 publish 타입 메서드를 사용하면 타이머 기능을 구현할 수 있다.
-  // * autoconnect() : upstream connectable publisher에 자동적으로 연결을 시켜주는 메서드이다.
-  private func usingTimerClass_57() {
-    // 1초마다 메인스레드에서 타이머를 동작 시킨다.
-    cancellable = Timer.publish(every: 1.0, on: .main, in: .common)
-      .autoconnect()
-      .scan(0) { counter, _ in
-        counter + 1 // scan operator를 사용하여 timer 호출 당 1씩 증가 시킨다.
-      }
-      .sink { value in
-        print("Timer Fired! \(value)")
-      }
-  }
+// RunLoop 방식 이외로도 Timer class의 publish 타입 메서드를 사용하면 타이머 기능을 구현할 수 있다.
+// * autoconnect() : upstream Connectable Publisher의 이벤트를 자동적으로 받을 수 있도록 해주는 메서드이다. (수동은 connect())
+private func usingTimerClass_57() {
+  // 1초마다 메인스레드에서 타이머를 동작 시킨다.
+  cancellable = Timer.publish(every: 1.0, on: .main, in: .common)
+    .autoconnect()
+    .scan(0) { counter, _ in
+      counter + 1 // scan operator를 사용하여 timer 호출 당 1씩 증가 시킨다.
+    }
+    .sink { value in
+      print("Timer Fired! \(value)")
+    }
+}
 ~~~
 
 
@@ -1155,62 +1250,32 @@ class MyViewController : UIViewController {
 - DispatchQueue, DispatchQueue.main.schedule
 
 ~~~swift
-  // MARK: 58. Using DispatchQueue
-  // RunLoop class, Timer class 에 이어 타이머를 사용하는 세번째 방법은 DispatchQueue입니다.
-  // DispatchQueue 를 통해 타이머 기능을 구현할 수 있습니다.
-  private func usingDispatchQueue_58() {
-    // RunLoop에서 처럼, 메모리에서 holding 할 수 있도록 timer실행 코드에 대한 할당을 해야 정상 동작이 됩니다.
-    // Dispatch.main.schedule로 타이머 기능 사용 가능
-    timerSubscription = queue.schedule(
-      after: queue.now,
-      interval: .seconds(1)
-    ) { [weak self] in
-      guard let self = self else { return }
-      // timer 호출마다 source subject에서 counter값 이벤트를 방출합니다.
-      self.source.send(self.counter)
-      self.counter += 1
-    }
-    
-    cancellable = source.sink {
-      if $0 == 5 {
-        // timer가 5번째 호출될때 구독을 취소하여 타이머 이벤트를 종료합니다.
-        self.cancellable?.cancel()
-        return
-      }
-      print($0)
-    }
+// MARK: 58. Using DispatchQueue
+// RunLoop class, Timer class 에 이어 타이머를 사용하는 세번째 방법은 DispatchQueue입니다.
+// DispatchQueue 를 통해 타이머 기능을 구현할 수 있습니다.
+private func usingDispatchQueue_58() {
+  // RunLoop에서 처럼, 메모리에서 holding 할 수 있도록 timer실행 코드에 대한 할당을 해야 정상 동작이 됩니다.
+  // Dispatch.main.schedule로 타이머 기능 사용 가능
+  timerSubscription = queue.schedule(
+    after: queue.now,
+    interval: .seconds(1)
+  ) { [weak self] in
+    guard let self = self else { return }
+    // timer 호출마다 source subject에서 counter값 이벤트를 방출합니다.
+    self.source.send(self.counter)
+    self.counter += 1
   }
-~~~
-
-
-
-### breakpoint operator
-
-~~~swift
-// MARK: 55. Using debugger with Combine
-// breakpoint operator는 특정 조건이 충족될때 디버깅모드로 진입할 수 있습니다. breakpoint처럼 디버깅에 사용할 수 있습니다.
-import UIKit
-import Combine
-
-class ViewController: UIViewController {
   
-  private var cancellable: AnyCancellable?
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    let publisher = (1...10).publisher
-    self.cancellable = publisher
-      .breakpoint(receiveOutput: { value in
-        return value > 9 // value가 9를 초과하게 되면 break point가 걸리며 디버깅모드로 진입할 수 있다.
-      })
-      .sink {
-      print($0)
+  cancellable = source.sink {
+    if $0 == 5 {
+      // timer가 5번째 호출될때 구독을 취소하여 타이머 이벤트를 종료합니다.
+      self.cancellable?.cancel()
+      return
     }
+    print($0)
   }
 }
 ~~~
-
-
 
 
 
