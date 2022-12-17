@@ -18,6 +18,16 @@ Combine framework study with Udemy lecture
 
 ### [Section 5: Combining Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-5-combining-operators-1)
 
+### [Section 6: Sequence Operators](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-6-sequence-operators-1)
+
+### [Section 7: Combine for Networking](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-7-combining-for-networking-1)
+
+### [Section 8: Debugging Combine](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-8-debugging-combine-1)
+
+### [Section 9: Combine Timers](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-9-combine-timers-1)
+
+
+
 <br>
 
 ## 스터디 계획
@@ -826,60 +836,45 @@ publisher1.send(3) // 3, "B"
 
 
 
-### zip operator
+### 5-42. zip operator
 
 - zip operator는 각각의 publisher에 대한 동일 순서의 이벤트를 튜플로 묶어서 방출합니다.
 - 만약 동일 순서의 이벤트 쌍을 맞추지 못한다면, 방출되지 않습니다.
 
 ~~~swift
-// MARK: 41. combineLatest operator
-// combineLatest는 RxSwift와 이름 동작이 모두 유사합니다.
-// 1) 두개의 publisher 최신 값을 이벤트로 방출합니다.
-// 2) 둘 중 어느 하나의 이벤트가 방출될때마다 각 publisher의 최신값을 방출합니다.
-// 3) 서로 다른 값 타입의 publisher들에 대해서도 combineLatest operator를 사용하여 최신 이벤트를 전달받을 수 있습니다.
+// MARK: 42. zip operator
 let publisher1 = PassthroughSubject<Int, Never>()
 let publisher2 = PassthroughSubject<String, Never>()
-publisher1.combineLatest(publisher2)
+publisher1.zip(publisher2)
   .sink {
     print("P1: \($0), P2: \($1)")
   }
-publisher1.send(1) // nothing
-publisher1.send(2) // nothing
+publisher1.send(1) // 이벤트 없음
+publisher1.send(2) // 이벤트 없음
 
-publisher2.send("A") // 2, "A"
-publisher2.send("B") // 2, "B"
+publisher2.send("A") // 2, "A", publisher1, publisher2의 첫번째 이벤트가 튜플 형태로 방출
+publisher2.send("B") // 2, "B", publisher1, publisher2의 두번째 이벤트가 튜플 형태로 방출
 
-publisher1.send(3) // 3, "B"
+publisher1.send(3) // 쌍을 이루지 못했으므로, 해당 값은 방출되지 않음
+// Output
+/*
+P1: 1, P2: A
+P1: 2, P2: B
+*/
 ~~~
 
 
 
-### min, max, first, last operator
+## Section 6: Sequence Operators
+
+### 6-43. min, max operator
+
+- Sequence의 최솟값, 최댓값을 방출
 
 ~~~swift
-// MARK: 44. first and last
-// first, last operator는 Sequence publisher의 처음, 마지막 이벤트 혹은 특정 조건을 충족하는 처음, 마지막 이벤트를 방출할 대 사용한다.
-let publisher = ["A", "B", "C", "D", "Bo", "Ba"].publisher
-
-publisher.first().sink { // Sequence publisher의 첫번째 이벤트를 방출
-  print($0) // "A"
-}
-
-publisher.first(where: { "Cat".contains($0) }).sink { // 특정 조건을 충족하는 첫번째 이벤트를 방출할 수도 있다.
-  print($0) // "C"
-}
-
-publisher.last().sink { // Sequence publisher의 마지막 이벤트를 방출
-  print($0) // "Ba"
-}
-
-publisher.last(where: { "Boy".contains($0) }).sink { // 특정 조건을 충족하는 마지막 이벤트를 방출할 수도 있다.
-  print($0) // "Bo"
-}
-
 // MARK: - Section 6. Sequence Operators
 // MARK: 43. min and max operator
-// Sequence operators는 쉬운편에 속합니다. publisher 자기 자신의 값에 대한 연산 위주이기 때문입니다.
+// Sequence operators는 쉬운 편에 속합니다. publisher 자기 자신의 값에 대한 연산이기 때문입니다.
 // min, max : Sequence publisher의 최숏값, 최댓값을 방출한다.
 let publisher2 = [1, -45, 3, 35, 30, 100].publisher
 publisher2.min().sink {
@@ -893,10 +888,37 @@ publisher2.max().sink {
 
 
 
-### output operator
+### 6-44. first, last operator
 
-- output operator는  Sequence publisher의 특정 인덱스 혹은 특정 범위의 이벤트를 방출 하려할때 사용합니다.
-  - 특정 인덱스나 범위를 인자로 지정하여 그에 맞는 이벤트 방출
+~~~swift
+// MARK: 44. first and last
+// first, last operator는 Sequence publisher의 처음, 마지막 이벤트 or 특정 조건을 충족하는 처음, 마지막 이벤트를 방출할 대 사용한다.
+let publisher = ["A", "B", "C", "D", "Bo", "Ba"].publisher
+
+publisher.first().sink { // Sequence publisher의 첫번째 이벤트를 방출
+  print($0) // "A"
+}
+
+publisher.first(where: { "Cat".contains($0) }).sink { // 특정 조건을 충족하는 첫번째 이벤트를 방출할 수도 있다.
+  // "Cat" 문자열에 포함되는 첫번째, "C"를 수신한다.
+  print($0) // "C"
+}
+
+publisher.last().sink { // Sequence publisher의 마지막 이벤트를 방출
+  print($0) // "Ba"
+}
+
+publisher.last(where: { "Boy".contains($0) }).sink { // 특정 조건을 충족하는 마지막 이벤트를 방출할 수도 있다.
+  // "Boy" 문자열에 포함되는 마지막, "Bo"를 수신한다.
+  print($0) // "Bo"
+}
+~~~
+
+
+
+### 6-45. output operator
+
+- output operator는  Sequence publisher의 특정 인덱스 혹은 특정 범위의 이벤트를 받고 싶을때 사용합니다.
 
 ~~~swift
 // MARK: 45. output operator
@@ -915,10 +937,10 @@ publisher.output(in: 1...).sink { print($0) } // B, C, D
 
 
 
-### count operator
+### 6-46. count operator
 
-- "How many values will be emitted by the publisher?"
 - count operator는 publisher에서 방출되는 값의 갯수를 반환할때 사용합니다.
+  - count operator의 특징은 count()를 사용한 Publisher 이벤트가 끝나는 시점에서 이벤트가 방출된다는 점입니다.
 
 ~~~swift
 // MARK: 46. count operator
@@ -940,20 +962,22 @@ publisher2.send(50)
 // subject의 경우 completed 이벤트가 발생하기 전까지 count 결과를 알 수 없습니다.
 // subject의 경우 completed 이벤트 발생 후, 지금까지 방출한 이벤트 갯수가 내려옵니다.
 publisher2.send(completion: .finished) // 3
+
+[1, 2, 3].publisher.count().sink {
+  // subject가 아닌 cold observable 형태의 publisher는 바로 이벤트를 받을 수 있습니다.
+  print($0) // 3
+}
 ~~~
 
 
 
-### contains operator
+### 6-47. contains operator
 
-- contains operator는 특정 값이 포함되었는지르 확인할때 사용하며, 포함 여부를 Boolean타입으로 반환합니다.
+- contains operator는 특정 값이 포함되었는지르 확인할때 사용하며, 포함 여부를 Bool 타입으로 반환합니다.
 
 ~~~swift
 // MARK: 47. contains operator
 let publisher = ["A", "B", "C", "D"].publisher
-publisher.contains("C").sink { // "C" 가 포함되어있는지를 Bool 타입으로 반환
-	print($0) // true
-}
 
 publisher.contains("Z").sink {
   print($0) // false
@@ -966,7 +990,25 @@ publisher.contains(where: { $0 == "A" }).sink {
 
 
 
-### reducer operator
+### 6-48. allSatisfy operator
+
+- Sequence의 모든 원소가 특정 조건을 모두 충족하면 true, 그 외에는 false를 down stream으로 방출합니다.
+
+~~~swift
+[1, 2, 3].publisher.allSatisfy { $0 % 2 == 0 }.sink {
+  // Sequence의 모든 원소가 짝수가 아니므로 false
+  print($0)
+}
+
+[1, 3, 7].publisher.allSatisfy { $0 % 2 == 1 }.sink {
+  // Sequence의 모든 원소가 홀수이므로 true
+  print($0)
+}
+~~~
+
+
+
+### 6-49. reduce operator
 
 - reduce operator는 초기값을 지정 후 Sequence publisher 값들에 대한 연산을 누적시킨 결과 값을 반환할 때 사용합니다.
 
@@ -1000,11 +1042,13 @@ publisher.reduce(1) {
 
 
 
+## Section 7: Combine for Networking
+
 ### Combine +  URLSession extension 을 통한 API 요청 
 
 ~~~swift
 // MARK: - 50. URLSession extensions
-// Combine framework를 활용하여 get api request, response 네트워킹에 사용할 URLSession extension을 구성해봅니다.
+// Combine framework를 활용하여 네트워킹에 사용할 URLSession extension을 구성해봅니다.
 
 func getPosts() -> AnyPublisher<Data, URLError> {
   // https://jsonplaceholder.typicode.com/posts
@@ -1013,13 +1057,13 @@ func getPosts() -> AnyPublisher<Data, URLError> {
     fatalError("Invalid URL Error !!")
   }
 
-  return URLSession.shared.dataTaskPublisher(for: url) // -> DataTaskPublisher
-    .map { $0.data } // -> DataTaskPublisher의 Output 중 data로 맵핑
+  return URLSession.shared.dataTaskPublisher(for: url) // -> DataTaskPublisher (iOS 13+)
+    .map { $0.data } // -> DataTaskPublisher의 Output 중 data로 맵핑, .map(\.data) 와 같이 KeyPath 방식 mapping도 가능
   	.decode(type: [Post].self, decoder: JSONDecoder()) // 특정 타입으로 decoding 가능
-    .eraseToAnyPublisher() // 구독이 가능한 AnyPublisher 타입으로 반환된다.
+    .eraseToAnyPublisher() // 연산 결과(Output, Failure)를 AnyPublisher 타입으로 추상화하여 반환된다.
 }
 
-// getPosts 결과를 정상적으로 출력하기 위해서는 cancellable 선언이 필요하다.
+// getPosts 결과를 정상적으로 출력하기 위해서는 cancellable 할당을 하거나, .store(in:)을 사용하여 구독정보를 메모리에 유지하고, 관리해야한다.
 let cancellable = getPosts().sink(receiveCompletion: { _ in
   print("completion called")
 }, receiveValue: {
@@ -1030,13 +1074,106 @@ let cancellable = getPosts().sink(receiveCompletion: { _ in
 
 
 
+## Section 8: Debugging Combine
+
+### print operator
+
+- Publisher의 down stream에서 발생하는 이벤트 결과를 출력할 수 있다.
+
+~~~swift
+// MARK: Section 8. Debugging Combine
+// MARK: 53. Printing events
+// print operator는 디버깅에 사용하는 operator로 인자로 디버깅 레이블을 넣어서 출력할 수도 있다.
+// print operator를 현재 이벤트 동작 방식을 확인할때 사용할 수 있다.
+let publisher = (1...3).publisher
+publisher
+  .print("Debug ID") // 라벨 없이 print()도 가능, print 인자로 디버깅 식별자를 넣고, 디버깅 로그를 출력할 수 있다.
+  .sink {
+    print($0)
+  }
+~~~
+
+
+
+### handleEvents
+
+- Publisher의 다양한 이벤트가 발생했을때 실행될 클로져를 제공한다.
+
+~~~swift
+// MARK: 54. Acting on events - performing side effects
+guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else {
+  fatalError("Invalid URL")
+}
+
+let request = URLSession.shared.dataTaskPublisher(for: url) // -> URLSession.DataTaskPublisher, (data, response) 튜플 데이터를 방출한다.
+
+// 동작 순서
+// 1) Received Request
+// 2) Subscription Received
+// 3) Received Output
+// 4) ~~~~ bytes (Decoding 되지 않은 json Data 수신)
+// 5) Received Completion
+// 6) finished
+let cancellable = request
+  .handleEvents(receiveSubscription: { _ in
+    print("Subscription Received")
+  }, receiveOutput: { _ in
+    print("Received Output")
+  }, receiveCompletion: { _ in
+    print("Received Completion")
+  }, receiveCancel: {
+    print("Received Cancel")
+  }, receiveRequest: { _ in
+    print("Received Request")
+  })
+  .print()
+  .sink(receiveCompletion: {
+  print($0)
+}, receiveValue: { value in
+  print(value.data)
+})
+~~~
+
+
+
+### breakpoint operator
+
+- 특정 조건을 충족했을때 디버깅 모드를 실행할 수 있다.
+
+~~~swift
+import UIKit
+import Combine
+
+class ViewController: UIViewController {
+  /// Publisher 구독정보를 담을 AnyCancellable 타입 변수 선언
+  private var cancellable: AnyCancellable?
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    let publisher = (1...10).publisher
+    self.cancellable = publisher
+      .breakpoint(receiveOutput: { value in
+				// 1 ~ 9 까지 이벤트를 방출하고, 10이 되었을때 디버깅 모드가 실행된다.
+        return value > 9
+      })
+      .sink {
+      print($0)
+    }
+  }
+}
+~~~
+
+
+
+## Section 9: Combine Timers
+
 ### Timer using Combine
 
 - 다양한 방법으로 타이머를 구현할 수 있습니다.
   - RunLoop.schedule (Cancellable 타입으로 관리)
   - DispatchQueue.main.achedule (Cancellable 타입으로 관리)
   - Timer.publish (TimerPublisher를 반환하면 구독 시 반환되는 AnyCancellable 타입으로 관리)
-- RunLoop (runLoop.schedule)
+    - ConnectablePublisher로, connect() or autoconnect()를 사용해야 원하는 시기에 이벤트를 받을 수 있다.
 
 ~~~swift
 import UIKit
@@ -1044,13 +1181,11 @@ import Combine
 import PlaygroundSupport
 
 // MARK: - Section 9. Combine Timers
-// MARK: 56. Using Runloop
+// MARK: 56. Using RunLoop
 // RunLoop은 timer 기능을 제공합니다. RunLoop.main 을 사용하면 메인스레드에서 timer 이벤트를 사용할 수 있습니다.
 // RunLoop 이외의 방식으로도 Combine을 활용해서 타이머 기능을 사용할 수 있습니다.
 
 class MyViewController : UIViewController {
-  
-//  private var cancellables = Set<AnyCancellable>()
   private let runLoop = RunLoop.main
   private var timerSubscription: Cancellable?
   
@@ -1095,19 +1230,19 @@ class MyViewController : UIViewController {
 
 ~~~swift
 // MARK: 57. Timer class
-  // RunLoop 방식 이외로도 Timer class의 publish 타입 메서드를 사용하면 타이머 기능을 구현할 수 있다.
-  // * autoconnect() : upstream connectable publisher에 자동적으로 연결을 시켜주는 메서드이다.
-  private func usingTimerClass_57() {
-    // 1초마다 메인스레드에서 타이머를 동작 시킨다.
-    cancellable = Timer.publish(every: 1.0, on: .main, in: .common)
-      .autoconnect()
-      .scan(0) { counter, _ in
-        counter + 1 // scan operator를 사용하여 timer 호출 당 1씩 증가 시킨다.
-      }
-      .sink { value in
-        print("Timer Fired! \(value)")
-      }
-  }
+// RunLoop 방식 이외로도 Timer class의 publish 타입 메서드를 사용하면 타이머 기능을 구현할 수 있다.
+// * autoconnect() : upstream Connectable Publisher의 이벤트를 자동적으로 받을 수 있도록 해주는 메서드이다. (수동은 connect())
+private func usingTimerClass_57() {
+  // 1초마다 메인스레드에서 타이머를 동작 시킨다.
+  cancellable = Timer.publish(every: 1.0, on: .main, in: .common)
+    .autoconnect()
+    .scan(0) { counter, _ in
+      counter + 1 // scan operator를 사용하여 timer 호출 당 1씩 증가 시킨다.
+    }
+    .sink { value in
+      print("Timer Fired! \(value)")
+    }
+}
 ~~~
 
 
@@ -1115,62 +1250,32 @@ class MyViewController : UIViewController {
 - DispatchQueue, DispatchQueue.main.schedule
 
 ~~~swift
-  // MARK: 58. Using DispatchQueue
-  // RunLoop class, Timer class 에 이어 타이머를 사용하는 세번째 방법은 DispatchQueue입니다.
-  // DispatchQueue 를 통해 타이머 기능을 구현할 수 있습니다.
-  private func usingDispatchQueue_58() {
-    // RunLoop에서 처럼, 메모리에서 holding 할 수 있도록 timer실행 코드에 대한 할당을 해야 정상 동작이 됩니다.
-    // Dispatch.main.schedule로 타이머 기능 사용 가능
-    timerSubscription = queue.schedule(
-      after: queue.now,
-      interval: .seconds(1)
-    ) { [weak self] in
-      guard let self = self else { return }
-      // timer 호출마다 source subject에서 counter값 이벤트를 방출합니다.
-      self.source.send(self.counter)
-      self.counter += 1
-    }
-    
-    cancellable = source.sink {
-      if $0 == 5 {
-        // timer가 5번째 호출될때 구독을 취소하여 타이머 이벤트를 종료합니다.
-        self.cancellable?.cancel()
-        return
-      }
-      print($0)
-    }
+// MARK: 58. Using DispatchQueue
+// RunLoop class, Timer class 에 이어 타이머를 사용하는 세번째 방법은 DispatchQueue입니다.
+// DispatchQueue 를 통해 타이머 기능을 구현할 수 있습니다.
+private func usingDispatchQueue_58() {
+  // RunLoop에서 처럼, 메모리에서 holding 할 수 있도록 timer실행 코드에 대한 할당을 해야 정상 동작이 됩니다.
+  // Dispatch.main.schedule로 타이머 기능 사용 가능
+  timerSubscription = queue.schedule(
+    after: queue.now,
+    interval: .seconds(1)
+  ) { [weak self] in
+    guard let self = self else { return }
+    // timer 호출마다 source subject에서 counter값 이벤트를 방출합니다.
+    self.source.send(self.counter)
+    self.counter += 1
   }
-~~~
-
-
-
-### breakpoint operator
-
-~~~swift
-// MARK: 55. Using debugger with Combine
-// breakpoint operator는 특정 조건이 충족될때 디버깅모드로 진입할 수 있습니다. breakpoint처럼 디버깅에 사용할 수 있습니다.
-import UIKit
-import Combine
-
-class ViewController: UIViewController {
   
-  private var cancellable: AnyCancellable?
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    let publisher = (1...10).publisher
-    self.cancellable = publisher
-      .breakpoint(receiveOutput: { value in
-        return value > 9 // value가 9를 초과하게 되면 break point가 걸리며 디버깅모드로 진입할 수 있다.
-      })
-      .sink {
-      print($0)
+  cancellable = source.sink {
+    if $0 == 5 {
+      // timer가 5번째 호출될때 구독을 취소하여 타이머 이벤트를 종료합니다.
+      self.cancellable?.cancel()
+      return
     }
+    print($0)
   }
 }
 ~~~
-
-
 
 
 
