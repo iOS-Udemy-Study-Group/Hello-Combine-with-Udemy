@@ -1424,7 +1424,7 @@ final class WebService {
     // 2) map은 keyPath를 통해 특정 변수만 남기도록 맵핑이 가능하다.
     // 3) decode로 특정 decoder를 이용해서 디코딩을 할 수 있다.
     // 4) 디코딩 결과에서 main만 남기는 모습
-    // 5) receive(on:)으로 특정 thread에서 동작하 지정할 수 있다. UI를 다루는 코드에 사용되므로 main thread에서 동작하도록 한다.
+    // 5) receive(on:)으로 특정 thread에서 동작하도록 지정할 수 있다. UI를 다루는 코드에 사용되므로 main thread에서 동작하도록 한다.
     // 6) 데이터의 내부적인 연산과정은 숨기고, 최종 결과형태만 받아서 구독 가능하도록 eraseToAnyPublisher()로 반환하고 있다.
     return URLSession.shared.dataTaskPublisher(for: url)
       .map(\.data)
