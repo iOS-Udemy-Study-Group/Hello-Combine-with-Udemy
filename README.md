@@ -934,13 +934,13 @@ publisher.last(where: { "Boy".contains($0) }).sink { // 특정 조건을 충족�
 ~~~swift
 // MARK: 45. output operator
 let publisher =  ["A", "B", "C", "D"].publisher
-print("Output(:at)")
+print("Output(at:)")
 // 2번째에 있는 이벤트만 방출
 publisher.output(at: 2).sink {
   print($0) // "C"
 }
 
-print("Output(:in)")
+print("Output(in:)")
 // 특정 범위에 해당되는 이벤트만 방출
 publisher.output(in: 0...2).sink { print($0) } // A, B, C
 publisher.output(in: 1...).sink { print($0) } // B, C, D
@@ -1164,7 +1164,7 @@ class ViewController: UIViewController {
     let publisher = (1...10).publisher
     self.cancellable = publisher
       .breakpoint(receiveOutput: { value in
-				// 1 ~ 9 까지 이벤트를 방출하고, 10이 되었을때 디버깅 모드가 실행된다.
+	// 1 ~ 9 까지 이벤트를 방출하고, 10이 되었을때 디버깅 모드가 실행된다.
         return value > 9
       })
       .sink {
@@ -1182,7 +1182,7 @@ class ViewController: UIViewController {
 
 - 다양한 방법으로 타이머를 구현할 수 있습니다.
   - RunLoop.schedule (Cancellable 타입으로 관리)
-  - DispatchQueue.main.achedule (Cancellable 타입으로 관리)
+  - DispatchQueue.main.schedule (Cancellable 타입으로 관리)
   - Timer.publish (TimerPublisher를 반환하면 구독 시 반환되는 AnyCancellable 타입으로 관리)
     - ConnectablePublisher로, connect() or autoconnect()를 사용해야 원하는 시기에 이벤트를 받을 수 있다.
 
@@ -1420,11 +1420,11 @@ final class WebService {
       fatalError("Invalid URL !!")
     }
     
-		// 1) dataTaskPublisher를 통해 data, response를 가진 URLSession.DataTaskPublisher 를 반환
+    // 1) dataTaskPublisher를 통해 data, response를 가진 URLSession.DataTaskPublisher 를 반환
     // 2) map은 keyPath를 통해 특정 변수만 남기도록 맵핑이 가능하다.
     // 3) decode로 특정 decoder를 이용해서 디코딩을 할 수 있다.
     // 4) 디코딩 결과에서 main만 남기는 모습
-    // 5) receive(on:)으로 특정 thread에서 동작하돌고 지정할 수 있다. UI를 다루는 코드에 사용되므로 main thread에서 동작하도록 한다.
+    // 5) receive(on:)으로 특정 thread에서 동작하도록 지정할 수 있다. UI를 다루는 코드에 사용되므로 main thread에서 동작하도록 한다.
     // 6) 데이터의 내부적인 연산과정은 숨기고, 최종 결과형태만 받아서 구독 가능하도록 eraseToAnyPublisher()로 반환하고 있다.
     return URLSession.shared.dataTaskPublisher(for: url)
       .map(\.data)
@@ -1465,7 +1465,7 @@ final class DebounceViewModel {
 private extension DebounceViewModel {
   
   private func bind() {
-    // text가 입력 후, 0.5초간 추가적인 이벤트가 있으면 이전 이벤트는 무시된다.
+    // text 입력 후, 0.5초간 추가적인 이벤트가 있으면 이전 이벤트는 무시된다.
     // text 입력 후, 0.5초간 추가적인 이벤트가 없을 경우, down stream 이벤트가 trigger된다.
     text
       .debounce(for: 0.5, scheduler: RunLoop.main)
