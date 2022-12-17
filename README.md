@@ -50,13 +50,22 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
 - 5-42. zip ~ 9-57. Timer class
 - 👩🏻‍💻 [applebuddy](https://github.com/applebuddy) | [AppleCEO](https://github.com/appleceo) | [betterhee](https://github.com/betterhee) | [Jae-eun](https://github.com/jae-eun) | [Lim-YongKwan](https://github.com/lim-yongkwan)
 
+### 4주차 스터디
+- 12/17(일), 오후 1시 ~ 3시 (완료)
+- 9-58. Using DispatchQueue ~ 13-72. Hello SwiftUI
+- 👩🏻‍💻 [applebuddy](https://github.com/applebuddy) | [AppleCEO](https://github.com/appleceo) | [Jae-eun](https://github.com/jae-eun) | [Lim-YongKwan](https://github.com/lim-yongkwan)
+* 크리스마스 1주일은 쉽니다. 4주차까지의 스터디 내용을 복습 및 보완할 시간 가지기.
+
+### 5주차 스터디
+-
+
 <br>
 
 ## 스터디 방식
 
 - Udemy 강의를 기반으로 한 스터디 내용을 스터디원 별로 공유 및 토론하며 공용 문서를 정리
 
-- 각자 학습한 내용은 공용 study repository에 공유
+- 각자 학습한 내용은 공용 study git repository에 공유
   - 각자 적당한 의무감을 갖고 스터디하기 위함
 - 개인적으로 공부한 내용은 개인폴더에 기록 (fork 후, 개인 스터디 내용 기록 했다가 공용 repository에 PR)
 - 스터디 주차마다 멤버가 한 명씩 스터디 기록 담당을 돌아가며 맡으며 readme.md 파일의 내용을 보완 및 서로 리뷰
@@ -71,6 +80,8 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
 - Combine과 KVO의 연관성은?
 - eraseToAnyPublisher의 역할?
   - Publisher 연산 결과를 추상화, 내부 연산과정은 숨기고, 결과 타입만 외부에 노출시킬때 사용, 이후 중간 연산 과정의 변화에 대한 외부 영향도가 줄어듦
+- share, multicast operator의 역할, 차이점
+  - share는 내부적으로 autoconnect()를 사용한다, multicast는 구독 값을 받기 위해 connect()를 사용해주어야 한다.
 
 
 <br>
