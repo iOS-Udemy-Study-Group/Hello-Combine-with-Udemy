@@ -26,7 +26,9 @@ Combine framework study with Udemy lecture
 
 ### [Section 9: Combine Timers](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-9-combine-timers-1)
 
+### [Section 10: Resources in Combine](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-10-resources-in-combine-1)
 
+### [Section 11: Integrating Combine with UIKit Application - Weather App](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-11-integrating-combine-with-uikit-application---weather-app-1)
 
 <br>
 
@@ -249,7 +251,7 @@ subject.subscribe(subscriber)
 
 // 2) Subject는 Publisher로서 이벤트를 방출할 수도 있습니다.
 let subscription = subject.sink { completion in 
-	print("Received Completion from sink")
+  print("Received Completion from sink")
 } receiveValue: { value in
   print("Received Value from sink, value: \(value)")
 }
@@ -303,8 +305,8 @@ let publisher = PassthroughSubject<Int, Never>() // PassthroughSubject<Int, Neve
 
 ~~~swift
 let anyCancellable = ["A", "B", "C", "D"].publisher.collect(3)
-	.sink { element in 
-	print(element)
+  .sink { element in 
+  print(element)
 }
 
 anyCancellable.cancel()
@@ -364,7 +366,7 @@ publisher.send(Point(x: 10, y: 20))
 // Q. replaceNil이 반환하는 [String?] 타입 대신 [String] 타입이 내려오게 하는 방법은?
 // 1) map { $0! } 을 사용하여 언래핑을 할 수 있다. 강제 옵셔널 언래핑은 안전하지 않은 방법이다. 하지만 replaceNiil을 통해 nil인 값을 다른 값으로 바꾸었기 때문에 정상적으로 언래핑 됨. (그냥 아니면 compactMap 쓰면 됨)
 ["A", "B", nil, "C"].publisher.replaceNil(with: "x")
-	.map { $0! }
+  .map { $0! }
   .sink {
     print($0)
   }
@@ -544,7 +546,7 @@ numbers.last(where: { $0 % 2 == 1 }) // 홀수인 마지막 값을 방출
 // dropFirst는 Sequence에서 최초 N개의 이벤트를 무시하고자할때 사용가능하다.
 let numbers = (1...10).publisher
 numbers.dropFirst(5)
-	.sink {
+  .sink {
     print($0)
   }
 
@@ -552,7 +554,7 @@ numbers.dropFirst(5)
 // dropWhile은 Sequence에서 특정 조건을 충족하는 동안은 이벤트를 무시하고 조건에 부합되지 않는 이벤트부터 이벤트를 방출한다.
 let numbers = (1...10).publisher
 numbers.drop(while: { $0 != 3 }) // 1, 2는 3이 아니므로 무시, 3부터 이벤트가 방출
-	.sink {
+  .sink {
     print($0)
   }
 
@@ -561,14 +563,14 @@ numbers.drop(while: { $0 != 3 }) // 1, 2는 3이 아니므로 무시, 3부터 �
 let taps = PassthroughSubject<Int, Never>() // 이벤트 구독 감지할 taps subject
 let isReady = PassthroughSubject<Void, Never>() // trigger용 isReady subject
 taps.drop(untilOutputFrom: isReady)
-	.sink(receiveValue: {
+  .sink(receiveValue: {
     print($0)
   })
 // isReady publisher가 이벤트를 방출하기 전까지 taps subject의 이벤트는 무시됩니다.
 // isReady subject(publisher)가 이벤트를 방출한 이후부터 tap subject의 이벤트가 방출됩니다.
 (1...10).forEach { n in
-	if n == 6 { isReady.send(()) } // isReady subject에서 이벤트를 방출 하는 시점 부터 taps subject로부터 이벤트를 받음
-	taps.send(n) // isReady가 이벤트를 방출한 이후부터 tap subject(publisher)는 이벤트를 방출, 구독 값 수신이 가능
+  if n == 6 { isReady.send(()) } // isReady subject에서 이벤트를 방출 하는 시점 부터 taps subject로부터 이벤트를 받음
+  taps.send(n) // isReady가 이벤트를 방출한 이후부터 tap subject(publisher)는 이벤트를 방출, 구독 값 수신이 가능
 }
 ~~~
 
@@ -586,14 +588,14 @@ taps.drop(untilOutputFrom: isReady)
 let numbers = (1...10).publisher
 print("What is the prefix operator in Combine framework?")
 numbers
-	.prefix(3) // 첫번째 부터 3개의 이벤트만 방출
-	.sink { element in
-		print(element) // 1, 2, 3
-	}
+  .prefix(3) // 첫번째 부터 3개의 이벤트만 방출
+  .sink { element in
+    print(element) // 1, 2, 3
+  }
 
 numbers
-	.prefix(while: { $0 % 3 != 0 }) // 3으로 나눈 나머지가 3이 아닌 동안 방출
-	.sink {
+  .prefix(while: { $0 % 3 != 0 }) // 3으로 나눈 나머지가 3이 아닌 동안 방출
+  .sink {
     print($0) // 1, 2
   }
 ~~~
@@ -663,12 +665,12 @@ let numbers = (1...5).publisher
 let publisher2 = (500...510)
 let publisher3 = [0].publisher
 numbers
-	.prepend(-20, -30) // -20, -30, 1, 2, 3, 4, 5
-	.prepend(100, 200, 300) // 100, 200, 300, -20, -30, 1, 2, 3, 4, 5
-	.prepend(publisher2) // 500, 501, ... 510, 100, 200, 300, -20, -30, 1, 2, 3, 4, 5
-	.prepend(publisher3) // 0, 500, 501, ... 510, 100, 200, 300, -20, -30, 1, 2, 3, 4, 5
-	.sink {
-		print($0) // 0, 500, 501, ... 510, 100, 200, 300, -20, -30, 1, 2, 3, 4, 5
+  .prepend(-20, -30) // -20, -30, 1, 2, 3, 4, 5
+  .prepend(100, 200, 300) // 100, 200, 300, -20, -30, 1, 2, 3, 4, 5
+  .prepend(publisher2) // 500, 501, ... 510, 100, 200, 300, -20, -30, 1, 2, 3, 4, 5
+  .prepend(publisher3) // 0, 500, 501, ... 510, 100, 200, 300, -20, -30, 1, 2, 3, 4, 5
+  .sink {
+    print($0) // 0, 500, 501, ... 510, 100, 200, 300, -20, -30, 1, 2, 3, 4, 5
   }
 ~~~
 
@@ -800,7 +802,7 @@ DispatchQueue.main.asyncAfter(deadline: .now() + 6.5, execute: {
 let publisher1 = PassthroughSubject<Int, Never>()
 let publisher2 = PassthroughSubject<Int, Never>()
 publisher1.merge(with: publisher2).sink {
-	print($0)
+  print($0)
 }
 
 // merge로 합친 여러개의 subject publisher에 대한 이벤트를 시간 순으로 수신할 수 있다.
@@ -1028,9 +1030,9 @@ publisher.contains(where: { $0 == "A" }).sink {
 let publisher =  [1, 2, 3, 4, 5, 6].publisher
 // reduce use case 1)
 publisher.reduce(0) { accumulator, value in
-	print("accumulator : \(accumulator) and the value is \(value)")
-	// accumulator가 immutable 값이며, 누적 연산 결과를 반환해야한다.
-	return accumulator + value
+  print("accumulator : \(accumulator) and the value is \(value)")
+  // accumulator가 immutable 값이며, 누적 연산 결과를 반환해야한다.
+  return accumulator + value
 }.sink {
   print($0)
 }
@@ -1070,7 +1072,7 @@ func getPosts() -> AnyPublisher<Data, URLError> {
 
   return URLSession.shared.dataTaskPublisher(for: url) // -> DataTaskPublisher (iOS 13+)
     .map { $0.data } // -> DataTaskPublisher의 Output 중 data로 맵핑, .map(\.data) 와 같이 KeyPath 방식 mapping도 가능
-  	.decode(type: [Post].self, decoder: JSONDecoder()) // 특정 타입으로 decoding 가능
+    .decode(type: [Post].self, decoder: JSONDecoder()) // 특정 타입으로 decoding 가능
     .eraseToAnyPublisher() // 연산 결과(Output, Failure)를 AnyPublisher 타입으로 추상화하여 반환된다.
 }
 
@@ -1164,7 +1166,7 @@ class ViewController: UIViewController {
     let publisher = (1...10).publisher
     self.cancellable = publisher
       .breakpoint(receiveOutput: { value in
-	// 1 ~ 9 까지 이벤트를 방출하고, 10이 되었을때 디버깅 모드가 실행된다.
+  // 1 ~ 9 까지 이벤트를 방출하고, 10이 되었을때 디버깅 모드가 실행된다.
         return value > 9
       })
       .sink {
@@ -1290,10 +1292,12 @@ private func usingDispatchQueue_58() {
 
 
 
-### Section 10. Resources in Combine
+## Section 10: Resources in Combine
+
+- 동일한 API의 다수 요청으로 중복 결과 값을 받는 경우, 비효율적일 수 있다. 이를 share operator로 해결해보자.
 
 ~~~swift
- // MARK: - Section 10. Resources in Combine
+  // MARK: - Section 10. Resources in Combine
   // MARK: 59. Understanding the problem
   private func understandingTheProblem_59() {
     guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else {
@@ -1304,7 +1308,8 @@ private func usingDispatchQueue_58() {
       .map(\.data) // KeyPath를 통해 response빼고 data만 down stream에 넘길 수 있다. (다수의 KeyPath를 지정할 수도 있음.)
       .print() // print operator로 stream 동작상태를 확인할 수 있습니다.
     
-    // subscription1, 2가 동일한 데이터를 받아온다. 동일한 결과값을 공유하지 않고 각자 구독하여 받고 있다. 이는 중복 작업으로 비효율적이다. 이러한 문제를 해결할 방법이 무엇이 있을까? share operator로 해결할 수 있다.
+    // subscription1, 2가 동일한 데이터를 받아온다. 동일한 결과값을 공유하지 않고 각자 구독하여 받고 있다. 이는 중복 작업으로 비효율적이다.   
+    // 이러한 문제를 해결할 방법이 무엇이 있을까? -> share operator로 해결할 수 있다.
     subscription1 = request.sink(receiveCompletion: { _ in }, receiveValue: {
       print($0)
     })
@@ -1317,16 +1322,16 @@ private func usingDispatchQueue_58() {
 
 
 
-### share, multicast operator
+### share operator
 
-- share operator
-  - share operator를 사용하면 해당 publisher에 대한 이벤트를 다수의 구독자가 공유하여 중복 작업 문제를 해결할 수 있다.
+- share operator를 사용하면 해당 publisher에 대한 이벤트를 다수의 구독자가 공유하여 중복 작업 문제를 해결할 수 있다.
+- 내부적으로 autoconnect()가 실행되는 operator이다.
+- 하지만, 비동기적으로 몇 초뒤에 API를 호출할 경우 받는 결과는 이벤트가 공유되지 않는다(따로 놀게 됨). 이런 문제는 multicast operator를 통해 해결할 수 있다.
 
 ~~~swift
 // MARK: - Section 10. Resources in Combine
 // MARK: 59. Understanding the problem
 // MARK: 60. share operator
-// MARK: 61. multicast operator
 // 'How can we share the results of a publisher?'
 // -> share operator를 사용하면 동일 publisher에 대한 구독 이벤트를 다수의 구독자가 공유하여 불필요한 중복 작업을 방지할 수 있다.
 private func understandingTheProblem_59() {
@@ -1338,39 +1343,36 @@ private func understandingTheProblem_59() {
     .map(\.data) // KeyPath를 통해 response빼고 data만 down stream에 넘길 수 있다.
     .print() // print operator로 stream 동작상태를 확인할 수 있습니다.
     .share() // * share operator를 사용하면 해당 publisher에 대한 이벤트를 다수의 구독자가 공유하여 중복 작업 문제를 해결할 수 있다.
-    
-    // subscription1, 2가 동일한 데이터를 받아온다. 이는 중복 작업으로 비효율적이다. 이러한 문제를 해결할 방법이 무엇이 있을까? share operator로 해결할 수 있다.
+
+  // Subscription 1)
   subscription1 = request.sink(receiveCompletion: { _ in }, receiveValue: {
     print("Subscription 1")
     print($0)
   })
-  
+
+  // Subscription 2)
   subscription2 = request.sink(receiveCompletion: { _ in }, receiveValue: {
     print("Subscription 2")
-    print($0) // share() operator를 사용했을 경우, 두번째 구독자는 이미 앞서 처리된 데이터를 공유하여 중복 작업을 하지 않게 됩니다.
+    print($0) // share() operator를 사용했을 경우, 두번째 구독자는 Subscription 1)의 데이터를 공유하여 중복 작업을 하지 않게 됩니다.
   })
-
-  self.subscription3 = request.sink(receiveCompletion: { _ in }, receiveValue: {
-    print("Subscription 3")
-    print($0)
-  })
-  
-  let cancellable = request.connect()
 }
 ~~~
 
 
 
-- multicast operator
-  - multicase operator의 인자로 지정한  Publisher의 값을 해당  operator를 사용한  publisher 구독자 전원에게 동일하게 뿌려줄 수있다.
+### multicast operator
+
+- multicast operator의 인자로 지정한 Publisher의 값을 해당 operator를 사용한 publisher 구독자 전원에게 동일하게 뿌려줄 수있다.
+  1. subject 레이블 인자로 multicast 용 publisher(subjectToMulticast)를 지정한다.
+  2. 이벤트를 전파받을 구독자 (A, B, C ...)는 multicast를 지정한 publisher를 구독한다.
+  3. subjectToMulticast publisher(subject)가 방출하는 이벤트를 구독자들이 받을 수 있다. (이때 구독자가 많아도 하나의 subscription receive event가 발생)
+- 내부적으로 ConnectablePublisher를 채택한다. share operator와 달리 이벤트를 정상적으로 받기 위해서는 connect(), autoconnect()를 명시해주어야 한다.
+- 관련 reference : https://zeddios.tistory.com/1011
 
 ~~~swift
 // MARK: - Section 10. Resources in Combine
-// MARK: 59. Understanding the problem
-// MARK: 60. share operator
 // MARK: 61. multicast operator
-// 'How can we share the results of a publisher?'
-// -> share operator를 사용하면 동일 publisher에 대한 구독 이벤트를 다수의 구독자가 공유하여 불필요한 중복 작업을 방지할 수 있다.
+
 private func understandingTheProblem_59() {
   guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts") else {
     fatalError("Invalid URL")
@@ -1380,9 +1382,7 @@ private func understandingTheProblem_59() {
     .map(\.data) // KeyPath를 통해 response빼고 data만 down stream에 넘길 수 있다.
     .print() // print operator로 stream 동작상태를 확인할 수 있습니다.
     .multicast(subject: self.subjectToMulticast) // multicast operator를 사용하면 해당 publisher를 구독하는 구독자들이 동일한 subject값을 전달받을 수 있게 된다.
-//      .share() // * share operator를 사용하면 해당 publisher에 대한 이벤트를 다수의 구독자가 공유하여 중복 작업 문제를 해결할 수 있다.
-    
-    // subscription1, 2가 동일한 데이터를 받아온다. 이는 중복 작업으로 비효율적이다. 이러한 문제를 해결할 방법이 무엇이 있을까? share operator로 해결할 수 있다.
+
   subscription1 = request.sink(receiveCompletion: { _ in }, receiveValue: {
     print("Subscription 1")
     print($0)
@@ -1405,6 +1405,10 @@ private func understandingTheProblem_59() {
 ~~~
 
 
+
+
+
+## Section 11: Integrating Combine with UIKit Application - Weather App
 
 ### Combine Publisher, Operator, Subscriber를 사용하여 날씨 정보를 조회하는 API 사용하기
 
@@ -1489,9 +1493,9 @@ final class ThrottleViewModel {
 private extension ThrottleViewModel {
   func bind() {
     touchEvent
-    	.throttle(for: 1, scheduler: RunLoop.main, latest, latest: false)
-    	.sink { self.count += $0 }
-    	.store(in: &cancellables)
+      .throttle(for: 1, scheduler: RunLoop.main, latest, latest: false)
+      .sink { self.count += $0 }
+      .store(in: &cancellables)
   }
 }
 ~~~
