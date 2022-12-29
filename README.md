@@ -56,10 +56,12 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
 - 12/17(일), 오후 1시 ~ 3시 (완료)
 - 9-58. Using DispatchQueue ~ 13-72. Hello SwiftUI
 - 👩🏻‍💻 [applebuddy](https://github.com/applebuddy) | [AppleCEO](https://github.com/appleceo) | [Jae-eun](https://github.com/jae-eun) | [Lim-YongKwan](https://github.com/lim-yongkwan)
-* 크리스마스 1주일은 쉽니다. 4주차까지의 스터디 내용을 복습 및 보완할 시간 가지기.
+* 크리스마스 주 1주일은 쉽니다. 4주차까지의 스터디 내용을 복습 및 보완할 시간 가지기.
 
 ### 5주차 스터디
--
+- 12/29(목), 오후 8시 ~ 10시 (완료)
+- 13-73. Customizing Text and Combining Views Using Stacks ~ 14-84. Understanding @EnvironmentObject
+- 👩🏻‍💻 [applebuddy](https://github.com/applebuddy) | [AppleCEO](https://github.com/appleceo) | [betterhee](https://github.com/betterhee) | [Jae-eun](https://github.com/jae-eun) | [Lim-YongKwan](https://github.com/lim-yongkwan)
 
 <br>
 
