@@ -238,7 +238,7 @@ Received value : C
 
 ### 2-12. Subjects
 
-- Publisher 이면서 Subscriber이다. (RxSwift의 Observable이면서 Subscriber인 Subject와 유사)
+- Publisher 이면서 Subscriber이다. (RxSwift의 Observable이면서 Observer인 Subject와 유사)
 - 초기값이 없는 PassthroughSubject, 초기값을 갖는 CurrentValueSubject가 있다. (RxSwift의 PublishSubject, BehaviorSubject와 유사)
 - RxCocoa에서 제공하는 PublishRelay, BehaviorRelay와 같은 Subject는 제공하지 않아 사용을 위해서는 Custom 구현을 해야 한다. (Failure 연관 타입을 Never로 지정)
 - 원하는 시점에 send를 통해 구독자들을 위한 이벤트를 방출할 수 있다.
