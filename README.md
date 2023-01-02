@@ -1501,3 +1501,118 @@ private extension ThrottleViewModel {
   }
 }
 ~~~
+
+
+## Section 13: Hello SwiftUI
+
+### VStack, HStack, ZStack
+
+SwiftUI 에서 뷰를 배치하는데 필수적인 새로운 구조이다.
+새로로 여러 뷰들을 배치할 때는 VStack, 가로로는 HStack, 깊이(앞, 뒤)로 쌓을 때는 ZStack 을 사용한다.
+
+
+### 선언형 프로그래밍
+
+아래 코드처럼 Text, Button 등의 뷰에 디테일하 항목들을 추가하여 변경할 수 있다.
+~~~swift
+Text("Hello, SwiftUI!)
+    .font(.title)
+    .foregroundColor(.blue)
+~~~
+
+### State, Binding
+
+- State 
+텍스트로 보여질 값이나 어떤 조건에 따라 뷰가 변경되어야 할 때 State 라는 Property wrapper 를 사용해야 한다.
+
+~~~swift
+// 텍스트에 보여질 String 값으로 episode 라는 State 변수를 가져오는 예제
+@State var episode = "Macbreak Weekly"
+
+var body: some View {
+     Text(self.episode)
+}
+~~~
+
+~~~swift
+// 텍스트에 칼라 속성 값을 isPlaying 이라는 Bool 값에 3항 연산자를 사용해 설정하는 예제
+@State var isPlaying = false
+
+var body: some View {
+     Text("isPlaying")
+         .foregroundColor(isPlaying ? .green : .red)
+     Button(action: {
+            self.isPlaying.toggle()
+        }) {
+            Text("Play")
+        }.padding(12)
+}
+~~~
+
+- Binding
+하위 뷰에서 상위 뷰에 상태를 변경하거나 사용하는 경우 Binding 이라는 Property wrapper 를 사용해야 한다.
+팝업 뷰에서 상위 뷰의 isPopupShow 변수를 false 로 만들어 자기 자신을 닫는데 사용할 수 있다.
+
+~~~swift
+// 팝업 뷰에서 상위 뷰의 isPopupShow 변수를 Binding 한 뒤 닫기 버튼을 누르면 상위 뷰의 State 를 false 로 변경하여 자기 자신을 닫는 예제
+struct ContentView : View {
+  @State var isPopupShow = false
+    
+  var body: some View {
+        
+  ZStack {
+    Button(action: {
+            self.isPopupShow = true
+        }) {
+            Text("Show popup")
+        }.padding(12)
+    
+    if isPopupShow {
+      PopupView(isPopupShow: $isPopupShow)
+    }
+  }
+}
+
+struct PopupView : View {
+  @Binding var isPopupShow = false
+  
+  var body: some View {
+    VStack {
+      Text("팝업 뷰 입니다.)
+      Button(action: {
+            self.isPopupShow = false
+        }) {
+            Text("닫기")
+        }.padding(12)
+    }
+  }
+}
+~~~
+
+### ObservableObject, EnvironmentObject
+- ObservableObject
+상태의 변화를 이벤트로 배출할 수 있는 객체(like ViewModel)
+
+~~~swift
+// CounterViewModel 객체를 만들어서 상태가 변경되면 구독하고 있는 뷰가 갱신되는 예제
+@ObservedObject var userSettings = UserSettings()
+    
+var body: some View {
+    VStack {
+        Text("\(self.userSettings.score)")
+            .font(.largeTitle)
+        Button("Increment Score") {
+            self.userSettings.score += 1
+        }
+    }
+}
+
+class UserSettings: ObservableObject {
+    
+    @Published var score: Int = 0
+    
+}
+~~~
+
+- EnvironmentObject
+생성된 뷰의 하위 뷰들에서 전역적으로 사용 가능한 ObservableObject 와 같이 상태의 변화를 이벤트로 방출할 수 있는 객체
