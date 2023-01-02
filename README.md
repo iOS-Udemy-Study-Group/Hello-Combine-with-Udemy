@@ -941,7 +941,7 @@ publisher.last(where: { "Boy".contains($0) }).sink { // 특정 조건을 충족�
 // MARK: 45. output operator
 let publisher =  ["A", "B", "C", "D"].publisher
 print("Output(at:)")
-// 2번째에 있는 이벤트만 방출
+// index 가 2인 이벤트만 방출
 publisher.output(at: 2).sink {
   print($0) // "C"
 }
