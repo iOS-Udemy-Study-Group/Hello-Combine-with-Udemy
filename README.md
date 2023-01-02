@@ -1516,7 +1516,7 @@ SwiftUI 에서 뷰를 배치하는데 필수적인 새로운 구조이다.
 
 ### 선언형 프로그래밍
 
-아래 코드처럼 Text, Button 등의 뷰에 디테일하 항목들을 추가하여 변경할 수 있다.
+아래 코드처럼 Text, Button 등의 뷰에 디테일한 항목(폰트, 색상)들을 추가하여 변경할 수 있다.
 ~~~swift
 Text("Hello, SwiftUI!)
     .font(.title)
@@ -1555,7 +1555,7 @@ var body: some View {
 
 - Binding
 
-하위 뷰에서 상위 뷰에 상태를 변경하거나 사용하는 경우 Binding 이라는 Property wrapper 를 사용해야 한다.
+하위 뷰에서 상위 뷰의 상태를 변경하거나 사용하는 경우 Binding 이라는 Property wrapper 를 사용해야 한다.
 
 팝업 뷰에서 상위 뷰의 isPopupShow 변수를 false 로 만들어 자기 자신을 닫는데 사용할 수 있다.
 
@@ -1598,7 +1598,7 @@ struct PopupView : View {
 ### ObservableObject, EnvironmentObject
 - ObservableObject
 
-상태의 변화를 이벤트로 배출할 수 있는 객체(like ViewModel)
+상태의 변화를 이벤트로 방출할 수 있는 객체(like ViewModel)
 
 ~~~swift
 // CounterViewModel 객체를 만들어서 상태가 변경되면 구독하고 있는 뷰가 갱신되는 예제
