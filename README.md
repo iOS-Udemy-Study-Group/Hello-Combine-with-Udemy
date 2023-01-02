@@ -30,6 +30,8 @@ Combine framework study with Udemy lecture
 
 ### [Section 11: Integrating Combine with UIKit Application - Weather App](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-11-integrating-combine-with-uikit-application---weather-app-1)
 
+### [Section 13: Hello SwiftUI](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#Hello-SwiftUI)
+
 <br>
 
 ## 스터디 계획
@@ -1523,6 +1525,7 @@ Text("Hello, SwiftUI!)
 ### State, Binding
 
 - State 
+
 텍스트로 보여질 값이나 어떤 조건에 따라 뷰가 변경되어야 할 때 State 라는 Property wrapper 를 사용해야 한다.
 
 ~~~swift
@@ -1550,7 +1553,9 @@ var body: some View {
 ~~~
 
 - Binding
+
 하위 뷰에서 상위 뷰에 상태를 변경하거나 사용하는 경우 Binding 이라는 Property wrapper 를 사용해야 한다.
+
 팝업 뷰에서 상위 뷰의 isPopupShow 변수를 false 로 만들어 자기 자신을 닫는데 사용할 수 있다.
 
 ~~~swift
@@ -1591,6 +1596,7 @@ struct PopupView : View {
 
 ### ObservableObject, EnvironmentObject
 - ObservableObject
+
 상태의 변화를 이벤트로 배출할 수 있는 객체(like ViewModel)
 
 ~~~swift
@@ -1615,4 +1621,5 @@ class UserSettings: ObservableObject {
 ~~~
 
 - EnvironmentObject
+
 생성된 뷰의 하위 뷰들에서 전역적으로 사용 가능한 ObservableObject 와 같이 상태의 변화를 이벤트로 방출할 수 있는 객체
