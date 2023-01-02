@@ -869,7 +869,7 @@ publisher1.zip(publisher2)
 publisher1.send(1) // 이벤트 없음
 publisher1.send(2) // 이벤트 없음
 
-publisher2.send("A") // 2, "A", publisher1, publisher2의 첫번째 이벤트가 튜플 형태로 방출
+publisher2.send("A") // 1, "A", publisher1, publisher2의 첫번째 이벤트가 튜플 형태로 방출
 publisher2.send("B") // 2, "B", publisher1, publisher2의 두번째 이벤트가 튜플 형태로 방출
 
 publisher1.send(3) // 쌍을 이루지 못했으므로, 해당 값은 방출되지 않음
