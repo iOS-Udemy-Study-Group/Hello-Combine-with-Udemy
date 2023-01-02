@@ -1510,7 +1510,8 @@ private extension ThrottleViewModel {
 ### VStack, HStack, ZStack
 
 SwiftUI 에서 뷰를 배치하는데 필수적인 새로운 구조이다.
-새로로 여러 뷰들을 배치할 때는 VStack, 가로로는 HStack, 깊이(앞, 뒤)로 쌓을 때는 ZStack 을 사용한다.
+  
+세로로 여러 뷰들을 배치할 때는 VStack, 가로로는 HStack, 깊이(앞, 뒤)로 쌓을 때는 ZStack 을 사용한다.
 
 
 ### 선언형 프로그래밍
