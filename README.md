@@ -1519,8 +1519,8 @@ SwiftUI 에서 뷰를 배치하는데 필수적인 새로운 구조이다.
 아래 코드처럼 Text, Button 등의 뷰에 디테일한 항목(폰트, 색상)들을 추가하여 변경할 수 있다.
 ~~~swift
 Text("Hello, SwiftUI!")
-    .font(.title)
-    .foregroundColor(.blue)
+  .font(.title)
+  .foregroundColor(.blue)
 ~~~
 
 ### State, Binding
@@ -1534,7 +1534,7 @@ Text("Hello, SwiftUI!")
 @State var episode = "Macbreak Weekly"
 
 var body: some View {
-     Text(self.episode)
+  Text(self.episode)
 }
 ~~~
 
@@ -1543,13 +1543,13 @@ var body: some View {
 @State var isPlaying = false
 
 var body: some View {
-     Text("isPlaying")
-         .foregroundColor(isPlaying ? .green : .red)
-     Button(action: {
-            self.isPlaying.toggle()
-        }) {
-            Text("Play")
-        }.padding(12)
+  Text("isPlaying")
+      .foregroundColor(isPlaying ? .green : .red)
+  Button(action: {
+    self.isPlaying.toggle()
+  }) {
+    Text("Play")
+  }.padding(12)
 }
 ~~~
 
@@ -1568,10 +1568,10 @@ struct ContentView : View {
         
   ZStack {
     Button(action: {
-            self.isPopupShow = true
-        }) {
-            Text("Show popup")
-        }.padding(12)
+      self.isPopupShow = true
+    }) {
+      Text("Show popup")
+    }.padding(12)
     
     if isPopupShow {
       PopupView(isPopupShow: $isPopupShow)
@@ -1586,10 +1586,10 @@ struct PopupView : View {
     VStack {
       Text("팝업 뷰 입니다.)
       Button(action: {
-            self.isPopupShow = false
-        }) {
-            Text("닫기")
-        }.padding(12)
+        self.isPopupShow = false
+      }) {
+        Text("닫기")
+      }.padding(12)
     }
   }
 }
@@ -1605,19 +1605,17 @@ struct PopupView : View {
 @ObservedObject var userSettings = UserSettings()
     
 var body: some View {
-    VStack {
-        Text("\(self.userSettings.score)")
-            .font(.largeTitle)
-        Button("Increment Score") {
-            self.userSettings.score += 1
-        }
+  VStack {
+    Text("\(self.userSettings.score)")
+      .font(.largeTitle)
+    Button("Increment Score") {
+      self.userSettings.score += 1
     }
+  }
 }
 
-class UserSettings: ObservableObject {
-    
-    @Published var score: Int = 0
-    
+class UserSettings: ObservableObject {  
+  @Published var score: Int = 0
 }
 ~~~
 
