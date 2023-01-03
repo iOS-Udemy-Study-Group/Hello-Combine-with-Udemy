@@ -30,7 +30,7 @@ Combine framework study with Udemy lecture
 
 ### [Section 11: Integrating Combine with UIKit Application - Weather App](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-11-integrating-combine-with-uikit-application---weather-app-1)
 
-### [Section 13: Hello SwiftUI](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#Hello-SwiftUI)
+### [Section 13: Hello SwiftUI](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-13:-hello-swiftui-1)
 
 <br>
 
