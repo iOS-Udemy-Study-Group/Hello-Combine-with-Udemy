@@ -1580,7 +1580,7 @@ struct ContentView : View {
 }
 
 struct PopupView : View {
-  @Binding var isPopupShow = false
+  @Binding var isPopupShow: Bool
   
   var body: some View {
     VStack {
