@@ -66,8 +66,9 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
 - 👩🏻‍💻 [applebuddy](https://github.com/applebuddy) | [AppleCEO](https://github.com/appleceo) | [betterhee](https://github.com/betterhee) | [Jae-eun](https://github.com/jae-eun) | [Lim-YongKwan](https://github.com/lim-yongkwan)
 
 ### 6주차 스터디
-- 1/8(일), 오후 2시 ~ 4시
-- Section 15: Hacker News - SwiftUI, Combine and Web API ~
+- 1/8(일), 오후 2시 ~ 4시 (완료)
+- Section 15: Hacker News - SwiftUI, Combine and Web API ~ Section 16: Conclusion
+- 👩🏻‍💻 [applebuddy](https://github.com/applebuddy) | [AppleCEO](https://github.com/appleceo) | [betterhee](https://github.com/betterhee) | [Jae-eun](https://github.com/jae-eun) | [Lim-YongKwan](https://github.com/lim-yongkwan)
 
 <br>
 
