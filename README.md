@@ -32,6 +32,10 @@ Combine framework study with Udemy lecture
 
 ### [Section 13: Hello SwiftUI](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#section-13-hello-swiftui-1)
 
+### [Section 15: Hacker News - SwiftUI, Combine and Web API](https://github.com/iOS-Udemy-Study-Group/Hello-Combine-with-Udemy#Section-15-Hacker-News---SwiftUI,-Combine-and-Web-API)
+
+
+
 <br>
 
 ## 스터디 계획
@@ -1515,7 +1519,7 @@ private extension ThrottleViewModel {
 ### VStack, HStack, ZStack
 
 SwiftUI 에서 뷰를 배치하는데 필수적인 새로운 구조이다.
-  
+
 세로로 여러 뷰들을 배치할 때는 VStack, 가로로는 HStack, 깊이(앞, 뒤)로 쌓을 때는 ZStack 을 사용한다.
 
 
@@ -1627,3 +1631,88 @@ class UserSettings: ObservableObject {
 - EnvironmentObject
 
 생성된 뷰의 하위 뷰들에서 전역적으로 사용 가능한 ObservableObject 와 같이 상태의 변화를 이벤트로 방출할 수 있는 객체
+
+
+
+
+
+## Section 15: Hacker News - SwiftUI, Combine and Web API
+
+### merge(with:)
+
+- up stream의 Publisher 이벤트와 인자로 받은 Publisher의 이벤트를 merge 하는 것, 각 Publisher의 이벤트 방출 시간순으로 down stream에 이벤트가 전달된다. 
+- Output 타입의 이벤트를 방출하는 Publisher들의 이벤트가 merge 되면서 다수의 Publisher에 대한 Output 타입 이벤트를 받을 수 있다.
+
+~~~swift
+let publisher = PassthroughSubject<Int, Never>()
+let pub2 = PassthroughSubject<Int, Never>()
+
+cancellable = publisher
+    .merge(with: pub2)
+    .sink { print("\($0)", terminator: " " )}
+
+publisher.send(2)
+pub2.send(2)
+publisher.send(3)
+pub2.send(22)
+publisher.send(45)
+pub2.send(22)
+publisher.send(17)
+
+// Prints: "2 2 3 22 45 22 17"
+~~~
+
+
+
+### HackerNews App, prefix, merge(with:) operator 사용 로직 재구성 예제 
+
+~~~swift
+// MARK: - HackerNews App의 Publisher 처리, 구독 과정 이해 목적으로 재구성
+
+import UIKit
+import Combine
+
+/// [Int] 타입의 storyIds를 50개 자른 뒤, String 타입으로 변환하여 방출하는 AnyPublisher 반환
+func mergeStories() -> AnyPublisher<String, Never> {
+  let stories = Array(1...100)
+  let storyIds = stories.prefix(50) // 1 ~ 50까지만 잘라서 저장
+  // AnyPublisher<String, Never>
+  let initialPublisher = getStringById(storyId: storyIds[0])
+  let remainder = Array(storyIds.dropFirst())
+
+  return remainder.reduce(initialPublisher) { combined, id in
+    // "1"을 시작으로 ~ ... "50"까지의 이벤트가 순차적으로 방출
+    // merge(with:)의 인자에 "2" ~ "50" 이벤트가 순차적으로 merge되며, 결과적으로 "1" ... "50"을 방출하는 AnyPublisher<String, Never> 타입의 Publisher가 된다.
+    return combined
+      .merge(with: getStringById(storyId: id))
+      .eraseToAnyPublisher()
+  }
+}
+
+/// Int 타입 id를 String Output을 가진 AnyPublisher로 반환
+func getStringById(storyId: Int) -> AnyPublisher<String, Never> {
+  // * Just는 Failure 타입이 Never임.
+  return Just(storyId) // Just<Int>
+    .map(String.init) // Just<String>
+    .eraseToAnyPublisher() // AnyPublisher<String, Never>
+}
+
+// 위 method 구독, 사용 예시
+var anyCancellables: Set<AnyCancellable> = []
+mergeStories()
+  .sink(
+    receiveCompletion: { _ in
+      print("receiveCompletion")
+    },
+    receiveValue: {
+      print($0, terminator: ", ")
+    }
+  )
+  .store(in: &anyCancellables)
+
+// Result
+/*
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, receiveCompletion
+*/
+
+~~~
