@@ -97,6 +97,7 @@ Udemy 강의를 활용하여 Combine framework 스터디 예정
   - Publisher 연산 결과를 추상화, 내부 연산과정은 숨기고, 결과 타입만 외부에 노출시킬때 사용, 이후 중간 연산 과정의 변화에 대한 외부 영향도가 줄어듦
 - share, multicast operator의 역할, 차이점
   - share는 내부적으로 autoconnect()를 사용한다, multicast는 구독 값을 받기 위해 connect()를 사용해주어야 한다.
+- [Publisher thread 지정 간 DispatchQueue.main, RunLoop.main의 차이](https://0urtrees.tistory.com/391)
 
 
 <br>
